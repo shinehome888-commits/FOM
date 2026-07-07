@@ -159,22 +159,6 @@
       height: 152px;
     }
     
-    /* Video Gallery */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-    .video-card {
-      overflow: hidden;
-      border-radius: 16px;
-    }
-    .video-card iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
-    }
-    
     /* Photo Gallery */
     .gallery-grid {
       display: grid;
@@ -235,25 +219,6 @@
       border-color: var(--gold);
     }
     
-    /* Community */
-    .community-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: #25D366;
-      color: white;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      margin: 10px;
-      transition: all 0.3s ease;
-    }
-    .community-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
-    }
-    
     /* Footer */
     footer {
       text-align: center;
@@ -262,20 +227,19 @@
       font-size: 0.9rem;
       color: #888;
     }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-    .social-links a {
+    .footer-text {
+      margin-top: 12px;
+      font-size: 0.95rem;
       color: #aaa;
-      text-decoration: none;
-      font-size: 1.5rem;
-      transition: color 0.3s;
     }
-    .social-links a:hover { color: var(--gold); }
+    .footer-text a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
     
     /* Floating WhatsApp Button */
     .whatsapp-float {
@@ -321,8 +285,8 @@
       <p>"From Liberia to the World" 🌍✨</p>
       <div>
         <a href="#music" class="btn btn-outline">🎧 Listen Now</a>
-        <a href="https://wa.me/233241112223?text=Hi%20Face%20Of%20Monrovia!%20I'd%20like%20to%20book%20you." target="_blank" class="btn btn-gold">📅 Book Now</a>
-        <a href="https://wa.me/233241112223?text=Hi!%20I%20want%20to%20join%20the%20community." target="_blank" class="btn btn-red">💬 Join WhatsApp</a>
+        <a href="https://wa.me/233240254680?text=Hi%20Face%20Of%20Monrovia!%20I'd%20like%20to%20book%20you." target="_blank" class="btn btn-gold">📅 Book Now</a>
+        <a href="https://wa.me/233240254680?text=Hi!%20I%20want%20to%20connect." target="_blank" class="btn btn-red">💬 Chat on WhatsApp</a>
       </div>
     </div>
   </section>
@@ -360,21 +324,6 @@
     </div>
   </section>
 
-  <!-- VIDEOS -->
-  <section id="videos">
-    <div class="container">
-      <h2 class="section-title font-display glow">Visuals</h2>
-      <div class="video-grid">
-        <div class="video-card glass">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-card glass">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- GALLERY -->
   <section id="gallery" style="background: linear-gradient(to bottom, #111, var(--black));">
     <div class="container">
@@ -398,7 +347,7 @@
           <p style="font-weight:600">Accra Nights Festival</p>
           <p style="color:#aaa">Accra, Ghana</p>
         </div>
-        <a href="https://wa.me/233241112223?text=Tickets%20for%20Accra%20Nights%20Festival" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
+        <a href="https://wa.me/233240254680?text=Tickets%20for%20Accra%20Nights%20Festival" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
       </div>
       <div class="event-card glass">
         <div>
@@ -406,7 +355,7 @@
           <p style="font-weight:600">Monrovia Homecoming</p>
           <p style="color:#aaa">Monrovia, Liberia</p>
         </div>
-        <a href="https://wa.me/233241112223?text=Tickets%20for%20Monrovia%20Homecoming" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
+        <a href="https://wa.me/233240254680?text=Tickets%20for%20Monrovia%20Homecoming" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
       </div>
     </div>
   </section>
@@ -434,38 +383,23 @@
     </div>
   </section>
 
-  <!-- COMMUNITY -->
-  <section id="community">
-    <div class="container" style="text-align:center">
-      <h2 class="section-title font-display glow">Join the Community</h2>
-      <p style="max-width:600px;margin:0 auto 24px;color:#ccc">
-        Exclusive music updates, new releases, behind-the-scenes, and fan interactions.
-      </p>
-      <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK" target="_blank" class="community-btn">
-        👥 Join WhatsApp Group
-      </a>
-      <a href="https://whatsapp.com/channel/YOUR_CHANNEL_LINK" target="_blank" class="community-btn" style="background:#008069">
-        📢 Follow WhatsApp Channel
-      </a>
-    </div>
-  </section>
-
   <!-- FOOTER -->
   <footer>
-    <div class="social-links">
-      <a href="https://instagram.com/faceofmonrovia" target="_blank">📷</a>
-      <a href="https://tiktok.com/@faceofmonrovia" target="_blank">🎵</a>
-      <a href="https://youtube.com/@faceofmonrovia" target="_blank">▶️</a>
-      <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank">🎧</a>
-      <a href="https://x.com/faceofmonrovia" target="_blank">🐦</a>
-      <a href="https://snapchat.com/add/faceofmonrovia" target="_blank">👻</a>
-    </div>
-    <p>© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
+    <p class="footer-text">
+      Connect with Face Of Monrovia on social media:<br>
+      <a href="https://instagram.com/faceofmonrovia" target="_blank">Instagram</a> • 
+      <a href="https://tiktok.com/@faceofmonrovia" target="_blank">TikTok</a> • 
+      <a href="https://youtube.com/@faceofmonrovia" target="_blank">YouTube</a> • 
+      <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank">Spotify</a> • 
+      <a href="https://x.com/faceofmonrovia" target="_blank">X</a> • 
+      <a href="https://snapchat.com/add/faceofmonrovia" target="_blank">Snapchat</a>
+    </p>
+    <p style="margin-top:20px">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
     <p style="font-size:0.8rem;margin-top:8px">Powered by KS1 Empire Global Foundation</p>
   </footer>
 
   <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/233241112223" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+  <a href="https://wa.me/233240254680" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
     💬
   </a>
 
@@ -483,7 +417,7 @@
       const message = document.getElementById('message').value;
       
       const text = `🎤 BOOKING INQUIRY\nName: ${name}\nWhatsApp: ${whatsapp}\nEvent: ${type}\nBudget: ${budget}\nMessage: ${message}`;
-      const url = `https://wa.me/233241112223?text=${encodeURIComponent(text)}`;
+      const url = `https://wa.me/233240254680?text=${encodeURIComponent(text)}`;
       
       window.open(url, '_blank');
       e.target.reset();
@@ -491,7 +425,7 @@
     
     // Subtle scroll animation for cards
     document.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('.music-card, .video-card, .event-card');
+      const cards = document.querySelectorAll('.music-card, .event-card');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
