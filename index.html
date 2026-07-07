@@ -196,6 +196,61 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.8);
     }
     
+    /* Lightbox - 3D Big View */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .lightbox.active {
+      display: flex;
+      animation: lightboxIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes lightboxIn {
+      from { opacity: 0; transform: scale(0.8) rotateX(10deg); }
+      to { opacity: 1; transform: scale(1) rotateX(0deg); }
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 25px 80px rgba(255,215,0,0.3);
+      transform-style: preserve-3d;
+      animation: imageFloat 0.3s ease;
+    }
+    @keyframes imageFloat {
+      from { transform: translateY(20px); }
+      to { transform: translateY(0); }
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: var(--gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2001;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.1);
+    }
+    .lightbox-close:hover {
+      background: rgba(255,215,0,0.3);
+      transform: rotate(90deg) scale(1.1);
+    }
+    
     /* Booking Form */
     .booking-form {
       max-width: 600px;
@@ -224,6 +279,13 @@
       background: rgba(0,0,0,0.6);
       box-shadow: 0 0 15px rgba(255,215,0,0.2);
     }
+    .booking-form button[type="submit"] {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      white-space: normal;
+      word-wrap: break-word;
+    }
     
     /* Footer / Social Section */
     #social {
@@ -243,14 +305,12 @@
     .social-links {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 16px;
       flex-wrap: wrap;
       margin: 24px 0;
     }
     .social-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-block;
       padding: 12px 24px;
       background: var(--light-black);
       border: 2px solid rgba(255,215,0,0.3);
@@ -274,27 +334,30 @@
       color: #888;
     }
     
-    /* Floating WhatsApp Button */
-    .whatsapp-float {
+    /* Floating Share Button */
+    .share-float {
       position: fixed;
       bottom: 25px;
       right: 25px;
-      background: #25D366;
-      color: white;
+      background: var(--gold);
+      color: var(--black);
       width: 60px;
       height: 60px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
       text-decoration: none;
-      box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5);
+      box-shadow: 0 5px 25px rgba(255,215,0,0.5);
       z-index: 1000;
       animation: bounce 2s infinite;
       transition: transform 0.3s;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
     }
-    .whatsapp-float:hover { transform: scale(1.1); }
+    .share-float:hover { transform: scale(1.1); }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -310,6 +373,18 @@
       .gallery-item img { height: 220px; }
       .social-links { gap: 12px; }
       .social-link { padding: 10px 18px; font-size: 0.9rem; }
+      .booking-form button[type="submit"] {
+        padding: 14px 20px;
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+      .lightbox-close {
+        top: 15px;
+        right: 20px;
+        font-size: 2.5rem;
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
 </head>
@@ -332,8 +407,9 @@
     <div class="container">
       <h2 class="section-title font-display glow">The Artist</h2>
       <p class="about-text">
-        Face Of Monrovia is a rising West African artist blending Afrobeat, Afro-fusion, and soulful storytelling. 
-        Rooted in Liberian culture and currently based in Accra, Ghana, she creates music that connects 
+        Face Of Monrovia (FOM) is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
+        She is a rising West African artist blending Afrobeat, Afro-fusion, and soulful storytelling. 
+        Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
         identity, ambition, love, and culture. Bold. Soulful. Stylish. Global.
       </p>
     </div>
@@ -344,49 +420,55 @@
     <div class="container">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
           <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>FOM Moments</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg')">
           <img src="https://i.ibb.co/wF4PTgzs/IMG-9024.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Behind The Scenes</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/v47T2qyq/IMG-9029.jpg')">
           <img src="https://i.ibb.co/v47T2qyq/IMG-9029.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Lifestyle</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg')">
           <img src="https://i.ibb.co/60Pwk5h6/IMG-9030.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Vibes</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/KRhYLPz/IMG-9032.jpg')">
           <img src="https://i.ibb.co/KRhYLPz/IMG-9032.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Style</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg')">
           <img src="https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Energy</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg')">
           <img src="https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Moments</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg')">
           <img src="https://i.ibb.co/xqhcXdkN/IMG-9035.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Studio</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg')">
           <img src="https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Performance</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/8G496dW/IMG-9037.jpg')">
           <img src="https://i.ibb.co/8G496dW/IMG-9037.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Excellence</span></div>
+          <div class="gallery-overlay"><span>Click to view</span></div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
+    <img id="lightbox-img" src="" alt="Face Of Monrovia - Full View">
+  </div>
 
   <!-- BOOKING -->
   <section id="booking" style="background: linear-gradient(to bottom, var(--black), #111);">
@@ -404,9 +486,7 @@
         </select>
         <input type="text" id="budget" placeholder="Budget (USD)">
         <textarea id="message" rows="4" placeholder="Message / Event Details *" required></textarea>
-        <button type="submit" class="btn btn-gold" style="width:100%;border:none;font-size:1.1rem">
-          💬 Send to WhatsApp
-        </button>
+        <button type="submit" class="btn btn-gold">💬 Send to WhatsApp</button>
       </form>
     </div>
   </section>
@@ -417,26 +497,70 @@
       <h3 class="social-title font-display">Connect With Face Of Monrovia</h3>
       <p style="color: #aaa; margin-bottom: 20px;">Follow the journey. Stay connected. Be part of the movement.</p>
       <div class="social-links">
-        <a href="https://instagram.com/faceofmonrovia" target="_blank" class="social-link">📷 Instagram</a>
-        <a href="https://tiktok.com/@faceofmonrovia" target="_blank" class="social-link">🎵 TikTok</a>
-        <a href="https://youtube.com/@faceofmonrovia" target="_blank" class="social-link">▶️ YouTube</a>
-        <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank" class="social-link">🎧 Spotify</a>
-        <a href="https://x.com/faceofmonrovia" target="_blank" class="social-link">🐦 X (Twitter)</a>
-        <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">👻 Snapchat</a>
+        <a href="https://instagram.com/faceofmonrovia" target="_blank" class="social-link">Instagram</a>
+        <a href="https://tiktok.com/@faceofmonrovia" target="_blank" class="social-link">TikTok</a>
+        <a href="https://youtube.com/@faceofmonrovia" target="_blank" class="social-link">YouTube</a>
+        <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank" class="social-link">Spotify</a>
+        <a href="https://x.com/faceofmonrovia" target="_blank" class="social-link">X (Twitter)</a>
+        <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">Snapchat</a>
       </div>
       <p class="footer-text">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p style="font-size:0.8rem;margin-top:8px;color: #666;">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </section>
 
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/233240254680" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
-    💬
-  </a>
+  <!-- FLOATING SHARE BUTTON -->
+  <button onclick="shareWebsite()" class="share-float" title="Share FOM Website">
+    📤
+  </button>
 
   <script>
     // Auto-update year
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Lightbox functions
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox(e) {
+      if (e.target.classList.contains('lightbox') || e.target.classList.contains('lightbox-close')) {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+    
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Share Website Function
+    async function shareWebsite() {
+      const shareData = {
+        title: 'FACE OF MONROVIA | From Liberia to the World',
+        text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨',
+        url: window.location.href
+      };
+      
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          // Fallback: Copy to clipboard
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Website link copied to clipboard! Share it with your friends. 🌍');
+        }
+      } catch (err) {
+        // If user cancels or share fails
+        console.log('Share cancelled or failed');
+      }
+    }
     
     // Booking form → WhatsApp
     function sendToWhatsApp(e) {
