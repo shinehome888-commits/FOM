@@ -25,7 +25,7 @@
       overflow-x: hidden;
     }
     .font-display { font-family: 'Playfair Display', serif; }
-    .glow { text-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+    .glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 4px 12px rgba(0,0,0,0.9); }
     .glass {
       background: var(--glass);
       backdrop-filter: blur(12px);
@@ -35,7 +35,7 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     section { padding: 80px 0; }
     
-    /* Hero 3D Effect */
+    /* HERO SECTION - 3D + ARTIST PHOTO BACKGROUND */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -44,70 +44,79 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      perspective: 1000px;
+      perspective: 1200px;
+      background: url('https://i.ibb.co/v47T2qyq/IMG-9029.jpg') center center/cover no-repeat;
+      animation: bg-pan 25s ease-in-out infinite alternate;
+    }
+    @keyframes bg-pan {
+      0% { background-position: center center; }
+      100% { background-position: center 40%; }
     }
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 30% 70%, rgba(139, 0, 0, 0.2), transparent 50%),
-                  radial-gradient(circle at 70% 30%, rgba(255, 215, 0, 0.15), transparent 50%);
-      animation: pulse 8s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+      background: linear-gradient(180deg, rgba(11,11,11,0.85) 0%, rgba(139,0,0,0.35) 50%, rgba(11,11,11,0.95) 100%);
+      z-index: 1;
     }
     .hero-content {
       position: relative;
       z-index: 2;
       transform-style: preserve-3d;
       animation: float 6s ease-in-out infinite;
+      padding: 20px;
     }
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotateX(0deg); }
-      50% { transform: translateY(-20px) rotateX(2deg); }
+      0%, 100% { transform: translateY(0) rotateX(0deg) scale(1); }
+      50% { transform: translateY(-15px) rotateX(2deg) scale(1.02); }
     }
     .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
       font-weight: 700;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
       color: var(--gold);
+      text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 25px rgba(255,215,0,0.6);
     }
     .hero p {
-      font-size: 1.25rem;
-      color: #ccc;
-      margin-bottom: 2rem;
+      font-size: 1.3rem;
+      color: #f0f0f0;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
     .btn {
       display: inline-block;
-      padding: 14px 32px;
-      margin: 8px;
+      padding: 16px 36px;
+      margin: 10px;
       border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.3s ease;
       cursor: pointer;
       border: 2px solid transparent;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     .btn-gold {
       background: var(--gold);
       color: var(--black);
+      box-shadow: 0 8px 25px rgba(255,215,0,0.3);
     }
     .btn-gold:hover {
       background: var(--white);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 35px rgba(255,215,0,0.5);
     }
     .btn-outline {
       border-color: var(--gold);
       color: var(--gold);
-      background: transparent;
+      background: rgba(0,0,0,0.4);
     }
     .btn-outline:hover {
       background: var(--gold);
       color: var(--black);
+      transform: translateY(-4px) scale(1.05);
     }
     
     /* Section Headings */
@@ -181,7 +190,7 @@
     .booking-form select {
       width: 100%;
       padding: 14px;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.4);
       border: 1px solid rgba(255,215,0,0.2);
       border-radius: 10px;
       color: white;
@@ -192,6 +201,7 @@
     .booking-form select:focus {
       outline: none;
       border-color: var(--gold);
+      background: rgba(0,0,0,0.6);
     }
     
     /* Footer */
@@ -245,8 +255,9 @@
     /* Responsive */
     @media (max-width: 768px) {
       section { padding: 60px 0; }
-      .hero h1 { font-size: 2.5rem; }
-      .btn { display: block; margin: 12px auto; width: 80%; }
+      .hero h1 { font-size: 2.8rem; }
+      .btn { display: block; margin: 12px auto; width: 85%; }
+      .hero-buttons { display: flex; flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -256,8 +267,8 @@
   <section class="hero">
     <div class="hero-content">
       <h1 class="font-display glow">FACE OF MONROVIA</h1>
-      <p>"From Liberia to the World" 🌍✨</p>
-      <div>
+      <p>"From Liberia to the World" ✨</p>
+      <div class="hero-buttons">
         <a href="#music" class="btn btn-outline">🎧 Listen Now</a>
         <a href="#booking" class="btn btn-gold">📅 Book Now</a>
       </div>
