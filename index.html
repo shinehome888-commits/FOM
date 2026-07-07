@@ -136,6 +136,78 @@
       color: var(--gold);
     }
     
+    /* DROPDOWN SECTIONS - 3D Gold Transparent */
+    .dropdown-section {
+      margin: 40px auto;
+      max-width: 900px;
+      perspective: 1000px;
+    }
+    .dropdown-header {
+      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(139,0,0,0.1));
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 16px;
+      padding: 24px 32px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      box-shadow: 0 10px 30px rgba(255,215,0,0.1);
+    }
+    .dropdown-header:hover {
+      background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(139,0,0,0.15));
+      border-color: var(--gold);
+      transform: translateY(-3px) rotateX(5deg);
+      box-shadow: 0 15px 40px rgba(255,215,0,0.25);
+    }
+    .dropdown-header h2 {
+      color: var(--gold);
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(255,215,0,0.5);
+      margin: 0;
+    }
+    .dropdown-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,215,0,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform 0.4s ease;
+      border: 1px solid rgba(255,215,0,0.3);
+    }
+    .dropdown-header.active .dropdown-icon {
+      transform: rotate(180deg);
+      background: rgba(255,215,0,0.4);
+    }
+    .dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: rotateX(-15deg) translateY(-20px);
+      transform-origin: top;
+    }
+    .dropdown-content.show {
+      max-height: 1000px;
+      opacity: 1;
+      transform: rotateX(0deg) translateY(0);
+    }
+    .dropdown-inner {
+      background: rgba(11,11,11,0.6);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      padding: 32px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,215,0,0.1);
+    }
+    
     /* About */
     .about-text {
       max-width: 700px;
@@ -143,6 +215,7 @@
       text-align: center;
       font-size: 1.1rem;
       color: #ddd;
+      line-height: 1.8;
     }
     
     /* Photo Gallery - 3D Smart Motion */
@@ -280,11 +353,11 @@
       box-shadow: 0 0 15px rgba(255,215,0,0.2);
     }
     .booking-form button[type="submit"] {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.1rem;
-      white-space: normal;
-      word-wrap: break-word;
+      padding: 12px 28px;
+      font-size: 1rem;
+      width: auto;
+      align-self: center;
+      min-width: 180px;
     }
     
     /* Footer / Social Section */
@@ -373,10 +446,13 @@
       .gallery-item img { height: 220px; }
       .social-links { gap: 12px; }
       .social-link { padding: 10px 18px; font-size: 0.9rem; }
+      .dropdown-header { padding: 20px 24px; }
+      .dropdown-header h2 { font-size: 1.3rem; }
+      .dropdown-inner { padding: 24px 20px; }
       .booking-form button[type="submit"] {
-        padding: 14px 20px;
-        font-size: 1rem;
-        line-height: 1.4;
+        padding: 10px 24px;
+        font-size: 0.95rem;
+        min-width: 160px;
       }
       .lightbox-close {
         top: 15px;
@@ -402,20 +478,25 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title font-display glow">The Artist</h2>
-      <p class="about-text">
-        Face Of Monrovia (FOM) is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
-        She is a rising West African artist blending Afrobeat, Afro-fusion, and soulful storytelling. 
-        Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
-        identity, ambition, love, and culture. Bold. Soulful. Stylish. Global.
-      </p>
+  <!-- ARTIST DROPDOWN SECTION -->
+  <div class="dropdown-section">
+    <div class="dropdown-header" onclick="toggleDropdown('artist')">
+      <h2 class="font-display">The Artist</h2>
+      <div class="dropdown-icon">▼</div>
     </div>
-  </section>
+    <div id="artist" class="dropdown-content">
+      <div class="dropdown-inner">
+        <p class="about-text">
+          Face Of Monrovia (FOM) is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
+          She is a rising West African artist blending Afrobeat, Afro-fusion, and soulful storytelling. 
+          Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
+          identity, ambition, love, and culture. Bold. Soulful. Stylish. Global.
+        </p>
+      </div>
+    </div>
+  </div>
 
-  <!-- GALLERY - 3D Smart Motion -->
+  <!-- GALLERY SECTION -->
   <section id="gallery" style="background: linear-gradient(to bottom, #111, var(--black));">
     <div class="container">
       <h2 class="section-title font-display glow">Gallery</h2>
@@ -470,40 +551,54 @@
     <img id="lightbox-img" src="" alt="Face Of Monrovia - Full View">
   </div>
 
-  <!-- BOOKING -->
-  <section id="booking" style="background: linear-gradient(to bottom, var(--black), #111);">
-    <div class="container">
-      <h2 class="section-title font-display glow">Book Face Of Monrovia</h2>
-      <form class="booking-form glass" onsubmit="sendToWhatsApp(event)">
-        <input type="text" id="name" placeholder="Full Name *" required>
-        <input type="text" id="whatsapp" placeholder="WhatsApp Number *" required>
-        <select id="type" required>
-          <option value="">Event Type *</option>
-          <option value="Concert">Concert</option>
-          <option value="Festival">Festival</option>
-          <option value="Private">Private Event</option>
-          <option value="Brand">Brand Campaign</option>
-        </select>
-        <input type="text" id="budget" placeholder="Budget (USD)">
-        <textarea id="message" rows="4" placeholder="Message / Event Details *" required></textarea>
-        <button type="submit" class="btn btn-gold">💬 Send to WhatsApp</button>
-      </form>
+  <!-- BOOKING DROPDOWN SECTION -->
+  <div class="dropdown-section">
+    <div class="dropdown-header" onclick="toggleDropdown('booking')">
+      <h2 class="font-display">Book Face Of Monrovia</h2>
+      <div class="dropdown-icon">▼</div>
     </div>
-  </section>
-
-  <!-- SOCIAL / FOOTER -->
-  <section id="social">
-    <footer>
-      <h3 class="social-title font-display">Connect With Face Of Monrovia</h3>
-      <p style="color: #aaa; margin-bottom: 20px;">Follow the journey. Stay connected. Be part of the movement.</p>
-      <div class="social-links">
-        <a href="https://instagram.com/faceofmonrovia" target="_blank" class="social-link">Instagram</a>
-        <a href="https://tiktok.com/@faceofmonrovia" target="_blank" class="social-link">TikTok</a>
-        <a href="https://youtube.com/@faceofmonrovia" target="_blank" class="social-link">YouTube</a>
-        <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank" class="social-link">Spotify</a>
-        <a href="https://x.com/faceofmonrovia" target="_blank" class="social-link">X (Twitter)</a>
-        <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">Snapchat</a>
+    <div id="booking" class="dropdown-content">
+      <div class="dropdown-inner">
+        <form class="booking-form" onsubmit="sendToWhatsApp(event)">
+          <input type="text" id="name" placeholder="Full Name *" required>
+          <input type="text" id="whatsapp" placeholder="WhatsApp Number *" required>
+          <select id="type" required>
+            <option value="">Event Type *</option>
+            <option value="Concert">Concert</option>
+            <option value="Festival">Festival</option>
+            <option value="Private">Private Event</option>
+            <option value="Brand">Brand Campaign</option>
+          </select>
+          <input type="text" id="budget" placeholder="Budget (USD)">
+          <textarea id="message" rows="4" placeholder="Message / Event Details *" required></textarea>
+          <button type="submit" class="btn btn-gold">💬 Send to WhatsApp</button>
+        </form>
       </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL / FOOTER DROPDOWN SECTION -->
+  <section id="social">
+    <div class="dropdown-section" style="margin: 0 auto;">
+      <div class="dropdown-header" onclick="toggleDropdown('connect')">
+        <h2 class="font-display">Connect With Face Of Monrovia (FOM)</h2>
+        <div class="dropdown-icon">▼</div>
+      </div>
+      <div id="connect" class="dropdown-content">
+        <div class="dropdown-inner" style="text-align: center;">
+          <p style="color: #aaa; margin-bottom: 24px; font-size: 1.05rem;">Follow the journey. Stay connected. Be part of the movement.</p>
+          <div class="social-links">
+            <a href="https://instagram.com/faceofmonrovia" target="_blank" class="social-link">Instagram</a>
+            <a href="https://tiktok.com/@faceofmonrovia" target="_blank" class="social-link">TikTok</a>
+            <a href="https://youtube.com/@faceofmonrovia" target="_blank" class="social-link">YouTube</a>
+            <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank" class="social-link">Spotify</a>
+            <a href="https://x.com/faceofmonrovia" target="_blank" class="social-link">X (Twitter)</a>
+            <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">Snapchat</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer style="margin-top: 60px;">
       <p class="footer-text">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p style="font-size:0.8rem;margin-top:8px;color: #666;">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
@@ -517,6 +612,24 @@
   <script>
     // Auto-update year
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Dropdown Toggle Function
+    function toggleDropdown(id) {
+      const content = document.getElementById(id);
+      const header = content.previousElementSibling;
+      
+      // Close all other dropdowns
+      document.querySelectorAll('.dropdown-content').forEach(drop => {
+        if (drop.id !== id) {
+          drop.classList.remove('show');
+          drop.previousElementSibling.classList.remove('active');
+        }
+      });
+      
+      // Toggle current dropdown
+      content.classList.toggle('show');
+      header.classList.toggle('active');
+    }
     
     // Lightbox functions
     function openLightbox(src) {
