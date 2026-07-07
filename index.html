@@ -14,6 +14,7 @@
       --red: #8B0000;
       --white: #FFFFFF;
       --glass: rgba(11, 11, 11, 0.7);
+      --light-black: rgba(20, 20, 20, 0.85);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -85,10 +86,15 @@
       font-weight: 400;
       text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
     .btn {
       display: inline-block;
       padding: 16px 36px;
-      margin: 10px;
       border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
@@ -97,21 +103,24 @@
       border: 2px solid transparent;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      min-width: 200px;
     }
     .btn-gold {
-      background: var(--gold);
-      color: var(--black);
-      box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+      background: var(--light-black);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 25px rgba(255,215,0,0.2);
     }
     .btn-gold:hover {
-      background: var(--white);
+      background: var(--gold);
+      color: var(--black);
       transform: translateY(-4px) scale(1.05);
       box-shadow: 0 12px 35px rgba(255,215,0,0.5);
     }
     .btn-outline {
       border-color: var(--gold);
       color: var(--gold);
-      background: rgba(0,0,0,0.4);
+      background: var(--light-black);
     }
     .btn-outline:hover {
       background: var(--gold);
@@ -136,45 +145,55 @@
       color: #ddd;
     }
     
-    /* Music Cards */
-    .music-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 2rem;
-    }
-    .music-card {
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      transform-style: preserve-3d;
-    }
-    .music-card:hover {
-      transform: translateY(-10px) rotateX(5deg) scale(1.02);
-      box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
-    }
-    .music-card iframe {
-      border-radius: 12px;
-      width: 100%;
-      height: 152px;
-    }
-    
-    /* Photo Gallery */
+    /* Photo Gallery - 3D Smart Motion */
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      perspective: 1000px;
     }
-    .gallery-img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      transform-style: preserve-3d;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       cursor: pointer;
-      transition: transform 0.3s ease;
     }
-    .gallery-img:hover {
-      transform: scale(1.05) rotate(1deg);
+    .gallery-item:hover {
+      transform: translateY(-10px) rotateY(5deg) scale(1.03);
+      box-shadow: 0 20px 50px rgba(255,215,0,0.3);
+      z-index: 10;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(139,0,0,0.7), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+    }
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+    .gallery-overlay span {
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
     }
     
     /* Booking Form */
@@ -195,6 +214,7 @@
       border-radius: 10px;
       color: white;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
     .booking-form input:focus,
     .booking-form textarea:focus,
@@ -202,28 +222,56 @@
       outline: none;
       border-color: var(--gold);
       background: rgba(0,0,0,0.6);
+      box-shadow: 0 0 15px rgba(255,215,0,0.2);
     }
     
-    /* Footer */
+    /* Footer / Social Section */
+    #social {
+      background: linear-gradient(to bottom, var(--black), #0a0a0a);
+    }
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 50px 20px;
       border-top: 1px solid rgba(255,215,0,0.1);
-      font-size: 0.9rem;
-      color: #888;
     }
-    .footer-text {
-      margin-top: 12px;
-      font-size: 0.95rem;
-      color: #aaa;
+    .social-title {
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-weight: 700;
     }
-    .footer-text a {
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--light-black);
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 50px;
       color: var(--gold);
       text-decoration: none;
       font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
     }
-    .footer-text a:hover {
-      text-decoration: underline;
+    .social-link:hover {
+      background: var(--gold);
+      color: var(--black);
+      transform: translateY(-4px) scale(1.05);
+      border-color: var(--gold);
+      box-shadow: 0 10px 30px rgba(255,215,0,0.4);
+    }
+    .footer-text {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: #888;
     }
     
     /* Floating WhatsApp Button */
@@ -256,8 +304,12 @@
     @media (max-width: 768px) {
       section { padding: 60px 0; }
       .hero h1 { font-size: 2.8rem; }
-      .btn { display: block; margin: 12px auto; width: 85%; }
-      .hero-buttons { display: flex; flex-direction: column; align-items: center; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn { width: 90%; max-width: 300px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+      .gallery-item img { height: 220px; }
+      .social-links { gap: 12px; }
+      .social-link { padding: 10px 18px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -269,7 +321,7 @@
       <h1 class="font-display glow">FACE OF MONROVIA</h1>
       <p>"From Liberia to the World" ✨</p>
       <div class="hero-buttons">
-        <a href="#music" class="btn btn-outline">🎧 Listen Now</a>
+        <a href="#social" class="btn btn-outline">Connect With FOM</a>
         <a href="#booking" class="btn btn-gold">📅 Book Now</a>
       </div>
     </div>
@@ -287,36 +339,51 @@
     </div>
   </section>
 
-  <!-- MUSIC -->
-  <section id="music" style="background: linear-gradient(to bottom, var(--black), #111);">
-    <div class="container">
-      <h2 class="section-title font-display glow">Latest Drops</h2>
-      <div class="music-grid">
-        <div class="music-card glass">
-          <iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT" loading="lazy"></iframe>
-          <p style="margin-top:12px;font-weight:600;color:var(--gold)">Spotify</p>
-        </div>
-        <div class="music-card glass">
-          <iframe src="https://audiomack.com/embed/audiomack/song/faceofmonrovia/latest?background=1" loading="lazy"></iframe>
-          <p style="margin-top:12px;font-weight:600;color:var(--gold)">Audiomack</p>
-        </div>
-        <div class="music-card glass">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" loading="lazy"></iframe>
-          <p style="margin-top:12px;font-weight:600;color:var(--gold)">YouTube</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALLERY -->
+  <!-- GALLERY - 3D Smart Motion -->
   <section id="gallery" style="background: linear-gradient(to bottom, #111, var(--black));">
     <div class="container">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
-        <img src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&w=400" alt="Artist" class="gallery-img glass">
-        <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=400" alt="Studio" class="gallery-img glass">
-        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400" alt="Performance" class="gallery-img glass">
-        <img src="https://images.unsplash.com/photo-1514525253440-1b82a9b7d7c3?auto=format&fit=crop&w=400" alt="Lifestyle" class="gallery-img glass">
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>FOM Moments</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/wF4PTgzs/IMG-9024.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Behind The Scenes</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/v47T2qyq/IMG-9029.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Lifestyle</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/60Pwk5h6/IMG-9030.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Vibes</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/KRhYLPz/IMG-9032.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Style</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Energy</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Moments</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/xqhcXdkN/IMG-9035.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Studio</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Performance</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.ibb.co/8G496dW/IMG-9037.jpg" alt="Face Of Monrovia">
+          <div class="gallery-overlay"><span>Excellence</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -344,20 +411,23 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p class="footer-text">
-      Connect with Face Of Monrovia on social media:<br>
-      <a href="https://instagram.com/faceofmonrovia" target="_blank">Instagram</a> • 
-      <a href="https://tiktok.com/@faceofmonrovia" target="_blank">TikTok</a> • 
-      <a href="https://youtube.com/@faceofmonrovia" target="_blank">YouTube</a> • 
-      <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank">Spotify</a> • 
-      <a href="https://x.com/faceofmonrovia" target="_blank">X</a> • 
-      <a href="https://snapchat.com/add/faceofmonrovia" target="_blank">Snapchat</a>
-    </p>
-    <p style="margin-top:20px">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
-    <p style="font-size:0.8rem;margin-top:8px">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
-  </footer>
+  <!-- SOCIAL / FOOTER -->
+  <section id="social">
+    <footer>
+      <h3 class="social-title font-display">Connect With Face Of Monrovia</h3>
+      <p style="color: #aaa; margin-bottom: 20px;">Follow the journey. Stay connected. Be part of the movement.</p>
+      <div class="social-links">
+        <a href="https://instagram.com/faceofmonrovia" target="_blank" class="social-link">📷 Instagram</a>
+        <a href="https://tiktok.com/@faceofmonrovia" target="_blank" class="social-link">🎵 TikTok</a>
+        <a href="https://youtube.com/@faceofmonrovia" target="_blank" class="social-link">▶️ YouTube</a>
+        <a href="https://open.spotify.com/artist/faceofmonrovia" target="_blank" class="social-link">🎧 Spotify</a>
+        <a href="https://x.com/faceofmonrovia" target="_blank" class="social-link">🐦 X (Twitter)</a>
+        <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">👻 Snapchat</a>
+      </div>
+      <p class="footer-text">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
+      <p style="font-size:0.8rem;margin-top:8px;color: #666;">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+    </footer>
+  </section>
 
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/233240254680" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
@@ -384,23 +454,25 @@
       e.target.reset();
     }
     
-    // Subtle scroll animation for cards
+    // Smart 3D scroll animation for gallery
     document.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('.music-card');
+      const items = document.querySelectorAll('.gallery-item');
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0) rotateY(0deg)';
+            }, index * 80);
           }
         });
       }, { threshold: 0.1 });
       
-      cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(card);
+      items.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px) rotateY(-10deg)';
+        item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(item);
       });
     });
   </script>
