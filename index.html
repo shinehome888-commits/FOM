@@ -109,15 +109,6 @@
       background: var(--gold);
       color: var(--black);
     }
-    .btn-red {
-      border-color: var(--red);
-      color: var(--red);
-      background: transparent;
-    }
-    .btn-red:hover {
-      background: var(--red);
-      color: var(--white);
-    }
     
     /* Section Headings */
     .section-title {
@@ -175,22 +166,6 @@
     }
     .gallery-img:hover {
       transform: scale(1.05) rotate(1deg);
-    }
-    
-    /* Events */
-    .event-card {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-    .event-date {
-      font-weight: 700;
-      color: var(--gold);
-      font-size: 1.1rem;
     }
     
     /* Booking Form */
@@ -272,7 +247,6 @@
       section { padding: 60px 0; }
       .hero h1 { font-size: 2.5rem; }
       .btn { display: block; margin: 12px auto; width: 80%; }
-      .event-card { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -285,8 +259,7 @@
       <p>"From Liberia to the World" 🌍✨</p>
       <div>
         <a href="#music" class="btn btn-outline">🎧 Listen Now</a>
-        <a href="https://wa.me/233240254680?text=Hi%20Face%20Of%20Monrovia!%20I'd%20like%20to%20book%20you." target="_blank" class="btn btn-gold">📅 Book Now</a>
-        <a href="https://wa.me/233240254680?text=Hi!%20I%20want%20to%20connect." target="_blank" class="btn btn-red">💬 Chat on WhatsApp</a>
+        <a href="#booking" class="btn btn-gold">📅 Book Now</a>
       </div>
     </div>
   </section>
@@ -297,7 +270,7 @@
       <h2 class="section-title font-display glow">The Artist</h2>
       <p class="about-text">
         Face Of Monrovia is a rising West African artist blending Afrobeat, Afro-fusion, and soulful storytelling. 
-        Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
+        Rooted in Liberian culture and currently based in Accra, Ghana, she creates music that connects 
         identity, ambition, love, and culture. Bold. Soulful. Stylish. Global.
       </p>
     </div>
@@ -337,29 +310,6 @@
     </div>
   </section>
 
-  <!-- EVENTS -->
-  <section id="events">
-    <div class="container">
-      <h2 class="section-title font-display glow">Upcoming Shows</h2>
-      <div class="event-card glass">
-        <div>
-          <p class="event-date">Dec 15, 2024</p>
-          <p style="font-weight:600">Accra Nights Festival</p>
-          <p style="color:#aaa">Accra, Ghana</p>
-        </div>
-        <a href="https://wa.me/233240254680?text=Tickets%20for%20Accra%20Nights%20Festival" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
-      </div>
-      <div class="event-card glass">
-        <div>
-          <p class="event-date">Jan 10, 2025</p>
-          <p style="font-weight:600">Monrovia Homecoming</p>
-          <p style="color:#aaa">Monrovia, Liberia</p>
-        </div>
-        <a href="https://wa.me/233240254680?text=Tickets%20for%20Monrovia%20Homecoming" target="_blank" class="btn btn-gold" style="padding:10px 24px;font-size:0.9rem">Get Tickets</a>
-      </div>
-    </div>
-  </section>
-
   <!-- BOOKING -->
   <section id="booking" style="background: linear-gradient(to bottom, var(--black), #111);">
     <div class="container">
@@ -395,7 +345,7 @@
       <a href="https://snapchat.com/add/faceofmonrovia" target="_blank">Snapchat</a>
     </p>
     <p style="margin-top:20px">© <span id="year"></span> Face Of Monrovia. All Rights Reserved.</p>
-    <p style="font-size:0.8rem;margin-top:8px">Powered by KS1 Empire Global Foundation</p>
+    <p style="font-size:0.8rem;margin-top:8px">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
   </footer>
 
   <!-- FLOATING WHATSAPP -->
@@ -425,7 +375,7 @@
     
     // Subtle scroll animation for cards
     document.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('.music-card, .event-card');
+      const cards = document.querySelectorAll('.music-card');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
