@@ -165,6 +165,7 @@
     .mobile-menu.show a:nth-child(2) { transition-delay: 0.2s; }
     .mobile-menu.show a:nth-child(3) { transition-delay: 0.3s; }
     .mobile-menu.show a:nth-child(4) { transition-delay: 0.4s; }
+    .mobile-menu.show a:nth-child(5) { transition-delay: 0.5s; }
     .mobile-menu a:hover {
       color: var(--gold);
       text-shadow: 0 0 20px rgba(255,215,0,0.6);
@@ -302,13 +303,25 @@
       justify-content: center;
       padding: 40px 20px;
       background: linear-gradient(135deg, #0a0a0a, #111, #0a0a0a);
+      flex-direction: column;
+    }
+    .about-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1100px;
+      width: 100%;
     }
     .about-card {
-      max-width: 800px;
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
       background: rgba(11,11,11,0.6);
       border: 2px solid rgba(255,215,0,0.2);
       border-radius: 24px;
-      padding: 50px;
+      padding: 40px;
       backdrop-filter: blur(15px);
       transform-style: preserve-3d;
       transition: transform 0.5s ease, box-shadow 0.5s ease;
@@ -326,12 +339,63 @@
     }
     .about-text {
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #ddd;
       line-height: 1.9;
     }
-    .about-text strong {
-      color: var(--gold);
+    .about-text strong { color: var(--gold); }
+    
+    /* 3D Moving Image */
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      max-width: 450px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+    .moving-frame {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid rgba(255,215,0,0.3);
+      box-shadow: 0 25px 70px rgba(255,215,0,0.2);
+      animation: moveRightToLeft 12s ease-in-out infinite alternate, float3D 6s ease-in-out infinite;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .moving-frame:hover {
+      transform: scale(1.03) rotateY(5deg);
+      box-shadow: 0 35px 90px rgba(255,215,0,0.4);
+      border-color: var(--gold);
+    }
+    @keyframes moveRightToLeft {
+      0% { transform: translateX(30px) rotateY(-5deg); }
+      100% { transform: translateX(-30px) rotateY(5deg); }
+    }
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0) rotateX(0deg); }
+      50% { transform: translateY(-12px) rotateX(3deg); }
+    }
+    .moving-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .moving-frame:hover img {
+      transform: scale(1.08);
+    }
+    .image-glow {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,215,0,0.1), transparent 60%);
+      pointer-events: none;
+      border-radius: 20px;
     }
     
     /* GALLERY PAGE */
@@ -341,8 +405,8 @@
     }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
       max-width: 1200px;
       margin: 0 auto;
       perspective: 1000px;
@@ -350,12 +414,13 @@
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 20px;
       transform-style: preserve-3d;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       cursor: pointer;
       border: 2px solid rgba(255,215,0,0.1);
+      background: rgba(11,11,11,0.4);
     }
     .gallery-item:hover {
       transform: translateY(-15px) rotateY(8deg) scale(1.05);
@@ -365,37 +430,82 @@
     }
     .gallery-item img {
       width: 100%;
-      height: 350px;
+      height: 320px;
       object-fit: cover;
       transition: transform 0.5s ease;
       display: block;
     }
     .gallery-item:hover img {
-      transform: scale(1.15);
+      transform: scale(1.12);
     }
+    
+    /* Interactive Overlay */
     .gallery-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(139,0,0,0.8), transparent 60%);
+      background: linear-gradient(to top, rgba(11,11,11,0.95), rgba(139,0,0,0.4) 40%, transparent 70%);
       opacity: 0;
       transition: opacity 0.4s ease;
       display: flex;
-      align-items: flex-end;
+      flex-direction: column;
+      justify-content: flex-end;
       padding: 20px;
+      border-radius: 20px;
     }
     .gallery-item:hover .gallery-overlay {
       opacity: 1;
     }
-    .gallery-overlay span {
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 1.1rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-      transform: translateY(10px);
-      transition: transform 0.3s ease;
+    
+    /* Interactive Buttons */
+    .interactive-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,215,0,0.2);
     }
-    .gallery-item:hover .gallery-overlay span {
-      transform: translateY(0);
+    .interaction-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .interaction-btn:hover {
+      color: var(--gold);
+      background: rgba(255,215,0,0.1);
+      transform: scale(1.08);
+    }
+    .interaction-btn.liked {
+      color: #ff4757;
+    }
+    .interaction-btn.liked:hover {
+      color: #ff6b81;
+    }
+    .interaction-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+    .interaction-btn:hover svg {
+      transform: scale(1.2);
+    }
+    
+    .gallery-title {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px rgba(255,215,0,0.3);
     }
     
     /* Lightbox - 3D Big View */
@@ -570,45 +680,84 @@
       box-shadow: 0 15px 40px rgba(255,215,0,0.4);
     }
     
-    /* Footer */
-    footer {
+    /* ========== FOOTER (ON EVERY PAGE) ========== */
+    .page-footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 25px 20px;
       border-top: 1px solid rgba(255,215,0,0.1);
       background: rgba(11,11,11,0.8);
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: #777;
     }
-    .footer-text {
-      font-size: 0.9rem;
-      color: #888;
+    .page-footer .trademark {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .page-footer .copyright {
+      margin-top: 8px;
+      opacity: 0.8;
     }
     
-    /* Floating Share Button */
+    /* ========== FLOATING SHARE BUTTON ========== */
     .share-float {
       position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: var(--gold);
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, var(--gold), #ffed4e);
       color: var(--black);
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       text-decoration: none;
-      box-shadow: 0 5px 25px rgba(255,215,0,0.5);
+      box-shadow: 0 8px 35px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.3);
       z-index: 1000;
-      animation: bounce 2s infinite;
-      transition: transform 0.3s;
-      border: none;
+      animation: bounce 2s infinite, glowPulse 3s infinite;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255,215,0,0.5);
       cursor: pointer;
       font-weight: 700;
+      backdrop-filter: blur(5px);
     }
-    .share-float:hover { transform: scale(1.15); }
+    .share-float:hover {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 12px 50px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.5);
+      background: linear-gradient(135deg, #fff, var(--gold));
+    }
+    .share-float:active {
+      transform: scale(0.95);
+    }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 8px 35px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.3); }
+      50% { box-shadow: 0 8px 35px rgba(255,215,0,0.9), 0 0 45px rgba(255,215,0,0.6); }
+    }
+    .share-tooltip {
+      position: absolute;
+      bottom: 75px;
+      right: 50%;
+      transform: translateX(50%);
+      background: rgba(11,11,11,0.95);
+      color: var(--gold);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      border: 1px solid rgba(255,215,0,0.3);
+      backdrop-filter: blur(10px);
+    }
+    .share-float:hover + .share-tooltip {
+      opacity: 1;
     }
     
     /* Responsive */
@@ -618,8 +767,9 @@
       .hero h1 { font-size: 2.8rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .btn { width: 90%; max-width: 300px; }
-      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
-      .gallery-item img { height: 250px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+      .gallery-item img { height: 260px; }
+      .about-wrapper { flex-direction: column; }
       .about-card, .booking-card, .connect-card { padding: 30px 24px; margin: 0 10px; }
       .booking-form button[type="submit"] {
         padding: 12px 24px;
@@ -635,6 +785,9 @@
       }
       .navbar { padding: 0 20px; }
       .nav-logo { font-size: 1.1rem; }
+      .moving-frame { max-width: 320px; }
+      .share-float { width: 56px; height: 56px; font-size: 1.4rem; bottom: 20px; right: 20px; }
+      .share-tooltip { display: none; }
     }
   </style>
 </head>
@@ -678,22 +831,41 @@
         </div>
       </div>
     </section>
+    <!-- Footer on Home Page -->
+    <footer class="page-footer">
+      <p class="copyright">© <span id="year-home"></span> Face Of Monrovia. All Rights Reserved.</p>
+      <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+    </footer>
   </div>
 
   <!-- ========== ARTIST PAGE ========== -->
   <div class="page" id="about">
     <div class="about-container">
-      <div class="about-card">
-        <h2 class="section-title font-display glow">The Artist</h2>
-        <p class="about-text">
-          <strong>Face Of Monrovia (FOM)</strong> is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
-          She is a rising West African artist blending <strong>Afrobeat, Afro-fusion, and soulful storytelling</strong>. 
-          Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
-          identity, ambition, love, and culture.<br><br>
-          <strong>Bold. Soulful. Stylish. Global.</strong>
-        </p>
+      <h2 class="section-title font-display glow">The Artist</h2>
+      <div class="about-wrapper">
+        <div class="about-card">
+          <p class="about-text">
+            <strong>Face Of Monrovia (FOM)</strong> is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
+            She is a rising West African artist blending <strong>Afrobeat, Afro-fusion, and soulful storytelling</strong>. 
+            Rooted in Liberian culture and inspired by Ghana's vibrant creative scene, she creates music that connects 
+            identity, ambition, love, and culture.<br><br>
+            <strong>Bold. Soulful. Stylish. Global.</strong>
+          </p>
+        </div>
+        <!-- 3D Moving Image -->
+        <div class="about-image">
+          <div class="moving-frame" onclick="openLightbox('https://i.ibb.co/DPWbXdZ2/IMG-9032.jpg')">
+            <img src="https://i.ibb.co/DPWbXdZ2/IMG-9032.jpg" alt="Face Of Monrovia">
+            <div class="image-glow"></div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- Footer on Artist Page -->
+    <footer class="page-footer">
+      <p class="copyright">© <span id="year-about"></span> Face Of Monrovia. All Rights Reserved.</p>
+      <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+    </footer>
   </div>
 
   <!-- ========== GALLERY PAGE ========== -->
@@ -701,52 +873,222 @@
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
+        <!-- Gallery Item 1 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
-          <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="FOM Moment">
+          <div class="gallery-overlay">
+            <span class="gallery-title">FOM Moments</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">124</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('FOM Moments', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">32</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">18</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 2 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg')">
-          <img src="https://i.ibb.co/wF4PTgzs/IMG-9024.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/wF4PTgzs/IMG-9024.jpg" alt="Behind Scenes">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Behind Scenes</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">89</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Behind Scenes', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">21</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">14</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 3 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/v47T2qyq/IMG-9029.jpg')">
-          <img src="https://i.ibb.co/v47T2qyq/IMG-9029.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/v47T2qyq/IMG-9029.jpg" alt="Lifestyle">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Lifestyle</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">256</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Lifestyle', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">67</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/v47T2qyq/IMG-9029.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">43</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 4 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg')">
-          <img src="https://i.ibb.co/60Pwk5h6/IMG-9030.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/60Pwk5h6/IMG-9030.jpg" alt="Vibes">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Vibes</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">178</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Vibes', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">45</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">29</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 5 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/KRhYLPz/IMG-9032.jpg')">
-          <img src="https://i.ibb.co/KRhYLPz/IMG-9032.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/KRhYLPz/IMG-9032.jpg" alt="Style">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Style</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">312</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Style', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">88</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/KRhYLPz/IMG-9032.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">56</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 6 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg')">
-          <img src="https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg" alt="Energy">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Energy</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">145</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Energy', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">34</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">22</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 7 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg')">
-          <img src="https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg" alt="Moments">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Moments</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">203</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Moments', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">51</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">37</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 8 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg')">
-          <img src="https://i.ibb.co/xqhcXdkN/IMG-9035.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/xqhcXdkN/IMG-9035.jpg" alt="Studio">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Studio</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">167</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Studio', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">39</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">26</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 9 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg')">
-          <img src="https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg" alt="Performance">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Performance</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">289</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Performance', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">73</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">48</span>
+              </button>
+            </div>
+          </div>
         </div>
+        <!-- Gallery Item 10 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/8G496dW/IMG-9037.jpg')">
-          <img src="https://i.ibb.co/8G496dW/IMG-9037.jpg" alt="Face Of Monrovia">
-          <div class="gallery-overlay"><span>Click to View</span></div>
+          <img src="https://i.ibb.co/8G496dW/IMG-9037.jpg" alt="Excellence">
+          <div class="gallery-overlay">
+            <span class="gallery-title">Excellence</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">234</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('Excellence', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">58</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/8G496dW/IMG-9037.jpg', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">41</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- Footer for Gallery Page -->
-    <footer>
-      <p class="footer-text">© <span id="year1"></span> Face Of Monrovia. All Rights Reserved.</p>
-      <p style="font-size:0.8rem;margin-top:8px;color: #666;">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+    <!-- Footer on Gallery Page -->
+    <footer class="page-footer">
+      <p class="copyright">© <span id="year-gallery"></span> Face Of Monrovia. All Rights Reserved.</p>
+      <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </div>
 
@@ -771,6 +1113,11 @@
         </form>
       </div>
     </div>
+    <!-- Footer on Booking Page -->
+    <footer class="page-footer">
+      <p class="copyright">© <span id="year-booking"></span> Face Of Monrovia. All Rights Reserved.</p>
+      <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+    </footer>
   </div>
 
   <!-- ========== CONNECT PAGE ========== -->
@@ -788,10 +1135,10 @@
           <a href="https://snapchat.com/add/faceofmonrovia" target="_blank" class="social-link">Snapchat</a>
         </div>
       </div>
-      <!-- Footer for Connect Page -->
-      <footer style="margin-top: 40px; border-top: 1px solid rgba(255,215,0,0.1); background: transparent;">
-        <p class="footer-text">© <span id="year2"></span> Face Of Monrovia. All Rights Reserved.</p>
-        <p style="font-size:0.8rem;margin-top:8px;color: #666;">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
+      <!-- Footer on Connect Page -->
+      <footer class="page-footer" style="margin-top: 30px; background: transparent; border-top: 1px solid rgba(255,215,0,0.1);">
+        <p class="copyright">© <span id="year-connect"></span> Face Of Monrovia. All Rights Reserved.</p>
+        <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
       </footer>
     </div>
   </div>
@@ -803,13 +1150,14 @@
   </div>
 
   <!-- ========== FLOATING SHARE BUTTON ========== -->
-  <button onclick="shareWebsite()" class="share-float" title="Share FOM Website">
-    
+  <button onclick="shareWebsite()" class="share-float" title="Share FOM Website" aria-label="Share this website">
+    📤
   </button>
+  <span class="share-tooltip">Share FOM Website</span>
 
   <script>
     // Auto-update year on all footer elements
-    document.querySelectorAll('#year, #year1, #year2').forEach(el => {
+    document.querySelectorAll('[id^="year-"]').forEach(el => {
       if(el) el.textContent = new Date().getFullYear();
     });
     
@@ -900,11 +1248,54 @@
           await navigator.share(shareData);
         } else {
           await navigator.clipboard.writeText(window.location.href);
-          alert('Website link copied to clipboard! Share it with your friends. 🌍');
+          alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍');
         }
       } catch (err) {
         console.log('Share cancelled or failed');
       }
+    }
+    
+    // ========== SHARE INDIVIDUAL IMAGE ==========
+    async function shareImage(imgUrl, event) {
+      if(event) event.stopPropagation();
+      
+      const shareData = {
+        title: 'Face Of Monrovia - Gallery',
+        text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨',
+        url: imgUrl
+      };
+      
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(imgUrl);
+          alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍');
+        }
+      } catch (err) {
+        console.log('Share cancelled');
+      }
+    }
+    
+    // ========== LIKE BUTTON TOGGLE ==========
+    function toggleLike(btn, event) {
+      if(event) event.stopPropagation();
+      btn.classList.toggle('liked');
+      const countEl = btn.querySelector('.count');
+      let count = parseInt(countEl.textContent) || 0;
+      countEl.textContent = btn.classList.contains('liked') ? count + 1 : Math.max(0, count - 1);
+      
+      // Small animation
+      btn.querySelector('svg').style.transform = 'scale(1.3)';
+      setTimeout(() => {
+        btn.querySelector('svg').style.transform = '';
+      }, 200);
+    }
+    
+    // ========== COMMENT BUTTON (Demo) ==========
+    function openComment(title, event) {
+      if(event) event.stopPropagation();
+      alert(`💬 Comments for "${title}"\n\nThis feature connects to WhatsApp!\n\nTap the 💬 floating button to send your comment directly to Face Of Monrovia's team. 🌍✨`);
     }
     
     // ========== BOOKING FORM → WHATSAPP ==========
