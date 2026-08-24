@@ -194,7 +194,7 @@
       }
     }
     
-    /* HOME PAGE - HERO WITH ROTATING VIDEO BACKGROUND */
+    /* HOME PAGE - HERO WITH VIDEO BACKGROUND (NO ROTATION) */
     .hero {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -205,7 +205,7 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Rotating Video Background Container */
+    /* Video Background Container - NO ROTATION */
     .hero-video-bg {
       position: absolute;
       top: 0;
@@ -214,12 +214,6 @@
       height: 100%;
       z-index: 0;
       pointer-events: none;
-      animation: rotate360 120s linear infinite; /* 360° clockwise over 120 seconds */
-      transform-origin: center center;
-    }
-    @keyframes rotate360 {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
     }
     .hero-video-bg iframe {
       width: 100% !important;
@@ -560,11 +554,18 @@
       text-shadow: 0 0 10px rgba(255,215,0,0.3);
     }
     
-    /* TikTok Screenshot Special */
+    /* TikTok Screenshot - CLICKABLE LINK */
     .tiktok-screenshot {
       grid-column: 1 / -1;
       border: 3px solid var(--gold);
       box-shadow: 0 0 40px rgba(255,215,0,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .tiktok-screenshot:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 70px rgba(255,215,0,0.5);
+      border-color: var(--gold);
     }
     .tiktok-screenshot img {
       height: auto;
@@ -573,6 +574,23 @@
     .tiktok-screenshot .gallery-title {
       font-size: 1.2rem;
       text-shadow: 0 0 15px rgba(255,215,0,0.6);
+    }
+    .tiktok-screenshot .gallery-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(255,215,0,0.2) 40%, transparent 70%);
+    }
+    .tiktok-screenshot .gallery-overlay::after {
+      content: '🔗 Tap to Follow on TikTok';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      animation: pulseGlow 2s infinite;
     }
     
     /* Lightbox - 3D Big View */
@@ -896,10 +914,10 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH ROTATING VIDEO BACKGROUND ========== -->
+  <!-- ========== HOME PAGE WITH VIDEO BACKGROUND (NO ROTATION) ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Streamable Promo Video Background - Playing, Looping, Rotating -->
+      <!-- Streamable Promo Video Background - Playing, Looping, NO ROTATION -->
       <div class="hero-video-bg">
         <iframe 
           src="https://streamable.com/e/0rx2xo?loop=1&autoplay=1&muted=1" 
@@ -963,32 +981,32 @@
     </footer>
   </div>
 
-  <!-- ========== GALLERY PAGE WITH TIKTOK SCREENSHOT ========== -->
+  <!-- ========== GALLERY PAGE WITH CLICKABLE TIKTOK LINK ========== -->
   <div class="page" id="gallery">
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
-        <!-- TikTok Screenshot - Featured -->
-        <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
+        <!-- TikTok Screenshot - CLICKABLE LINK TO TIKTOK ACCOUNT -->
+        <a href="https://www.tiktok.com/@face.of.monrovia?_r=1&_t=ZS-97q6RZ9E95d" target="_blank" rel="noopener noreferrer" class="gallery-item tiktok-screenshot" style="text-decoration: none; display: block;">
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
           <div class="gallery-overlay">
             <span class="gallery-title">🎵 Follow on TikTok • EP Coming Soon</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
+              <button class="interaction-btn" onclick="event.stopPropagation(); toggleLike(this, event)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <span class="count">1.2K</span>
               </button>
-              <button class="interaction-btn" onclick="openComment('TikTok', event)">
+              <button class="interaction-btn" onclick="event.stopPropagation(); openComment('TikTok', event)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span class="count">342</span>
               </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/nMLRXQdy/IMG-9516.png', event)">
+              <button class="interaction-btn" onclick="event.stopPropagation(); shareImage('https://i.ibb.co/nMLRXQdy/IMG-9516.png', event)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                 <span class="count">89</span>
               </button>
             </div>
           </div>
-        </div>
+        </a>
         
         <!-- Gallery Item 1 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
