@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World">
+  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP Coming Soon">
   <title>FACE OF MONROVIA | From Liberia to the World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -194,7 +194,7 @@
       }
     }
     
-    /* HOME PAGE - HERO */
+    /* HOME PAGE - HERO WITH VIDEO BACKGROUND */
     .hero {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -204,18 +204,26 @@
       position: relative;
       overflow: hidden;
       perspective: 1200px;
-      background: url('https://i.ibb.co/v47T2qyq/IMG-9029.jpg') center center/cover no-repeat;
-      animation: bg-pan 25s ease-in-out infinite alternate;
     }
-    @keyframes bg-pan {
-      0% { background-position: center center; }
-      100% { background-position: center 40%; }
+    /* Video Background */
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.6;
+      filter: brightness(0.7) contrast(1.1);
     }
+    /* Fallback image if video fails */
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(11,11,11,0.85) 0%, rgba(139,0,0,0.35) 50%, rgba(11,11,11,0.95) 100%);
+      background: linear-gradient(180deg, rgba(11,11,11,0.85) 0%, rgba(139,0,0,0.35) 50%, rgba(11,11,11,0.95) 100%),
+                  url('https://i.ibb.co/v47T2qyq/IMG-9029.jpg') center center/cover no-repeat;
       z-index: 1;
     }
     .hero-content {
@@ -284,6 +292,33 @@
       background: var(--gold);
       color: var(--black);
       transform: translateY(-4px) scale(1.05);
+    }
+    
+    /* EP Coming Soon Banner */
+    .ep-banner {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(139,0,0,0.9), rgba(11,11,11,0.95));
+      border: 2px solid var(--gold);
+      border-radius: 50px;
+      padding: 12px 28px;
+      z-index: 3;
+      animation: pulseGlow 2s infinite;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(255,215,0,0.3);
+    }
+    .ep-banner span {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 10px 40px rgba(255,215,0,0.3); }
+      50% { box-shadow: 0 15px 60px rgba(255,215,0,0.6); }
     }
     
     /* Section Headings */
@@ -506,6 +541,21 @@
       font-size: 1rem;
       margin-bottom: 8px;
       text-shadow: 0 0 10px rgba(255,215,0,0.3);
+    }
+    
+    /* TikTok Screenshot Special */
+    .tiktok-screenshot {
+      grid-column: 1 / -1;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 40px rgba(255,215,0,0.3);
+    }
+    .tiktok-screenshot img {
+      height: auto;
+      max-height: 400px;
+    }
+    .tiktok-screenshot .gallery-title {
+      font-size: 1.2rem;
+      text-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
     
     /* Lightbox - 3D Big View */
@@ -788,6 +838,13 @@
       .moving-frame { max-width: 320px; }
       .share-float { width: 56px; height: 56px; font-size: 1.4rem; bottom: 20px; right: 20px; }
       .share-tooltip { display: none; }
+      .ep-banner {
+        top: 15px;
+        padding: 10px 20px;
+      }
+      .ep-banner span {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -819,9 +876,20 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE ========== -->
+  <!-- ========== HOME PAGE WITH VIDEO BACKGROUND ========== -->
   <div class="page active" id="home">
     <section class="hero">
+      <!-- Video Background (replace src with direct .mp4 link if needed) -->
+      <video class="hero-video" autoplay muted loop playsinline poster="https://i.ibb.co/v47T2qyq/IMG-9029.jpg">
+        <source src="https://storage.to/EbNuG8bJe" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      
+      <!-- EP Coming Soon Banner -->
+      <div class="ep-banner">
+        <span>🔥 NEW EP COMING SOON 🔥</span>
+      </div>
+      
       <div class="hero-content">
         <h1 class="font-display glow">FACE OF MONROVIA</h1>
         <p>"From Liberia to the World" ✨</p>
@@ -868,11 +936,33 @@
     </footer>
   </div>
 
-  <!-- ========== GALLERY PAGE ========== -->
+  <!-- ========== GALLERY PAGE WITH TIKTOK SCREENSHOT ========== -->
   <div class="page" id="gallery">
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
+        <!-- TikTok Screenshot - Featured -->
+        <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
+          <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
+          <div class="gallery-overlay">
+            <span class="gallery-title">🎵 Follow on TikTok • EP Coming Soon</span>
+            <div class="interactive-bar">
+              <button class="interaction-btn" onclick="toggleLike(this, event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="count">1.2K</span>
+              </button>
+              <button class="interaction-btn" onclick="openComment('TikTok', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="count">342</span>
+              </button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/nMLRXQdy/IMG-9516.png', event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span class="count">89</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
         <!-- Gallery Item 1 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
           <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="FOM Moment">
@@ -1133,6 +1223,11 @@
           <a href="https://www.instagram.com/yo_mick1?igsh=dXU5OHZmN2QzajR5&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
           <a href="https://snapchat.com/t/JnglfKQf" target="_blank" rel="noopener noreferrer" class="social-link">Snapchat</a>
         </div>
+        <!-- TikTok Screenshot in Connect Section Too -->
+        <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.4); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
+          <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates</p>
+          <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="TikTok" style="max-width: 300px; border-radius: 12px; border: 2px solid var(--gold);">
+        </div>
       </div>
       <!-- Footer on Connect Page -->
       <footer class="page-footer" style="margin-top: 30px; background: transparent; border-top: 1px solid rgba(255,215,0,0.1);">
@@ -1238,7 +1333,7 @@
     async function shareWebsite() {
       const shareData = {
         title: 'FACE OF MONROVIA | From Liberia to the World',
-        text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨',
+        text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Coming Soon!',
         url: window.location.href
       };
       
@@ -1260,7 +1355,7 @@
       
       const shareData = {
         title: 'Face Of Monrovia - Gallery',
-        text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨',
+        text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Coming Soon!',
         url: imgUrl
       };
       
