@@ -194,7 +194,7 @@
       }
     }
     
-    /* HOME PAGE - HERO WITH VIDEO BACKGROUND (NO ROTATION) */
+    /* HOME PAGE - HERO WITH ROTATING VIDEO BACKGROUND */
     .hero {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -205,7 +205,7 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Video Background Container - NO ROTATION */
+    /* Rotating Video Background Container */
     .hero-video-bg {
       position: absolute;
       top: 0;
@@ -214,6 +214,12 @@
       height: 100%;
       z-index: 0;
       pointer-events: none;
+      animation: rotate360 120s linear infinite; /* 360° clockwise over 120 seconds */
+      transform-origin: center center;
+    }
+    @keyframes rotate360 {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     .hero-video-bg iframe {
       width: 100% !important;
@@ -890,10 +896,10 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH VIDEO BACKGROUND (NO ROTATION) ========== -->
+  <!-- ========== HOME PAGE WITH ROTATING VIDEO BACKGROUND ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Streamable Promo Video Background - Playing, Looping, NO ROTATION -->
+      <!-- Streamable Promo Video Background - Playing, Looping, Rotating -->
       <div class="hero-video-bg">
         <iframe 
           src="https://streamable.com/e/0rx2xo?loop=1&autoplay=1&muted=1" 
