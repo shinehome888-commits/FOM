@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP Coming Soon">
   <title>FACE OF MONROVIA | From Liberia to the World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +25,7 @@
       line-height: 1.6;
       overflow-x: hidden;
       overflow-y: auto;
+      -webkit-tap-highlight-color: transparent;
     }
     .font-display { font-family: 'Playfair Display', serif; }
     .glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 4px 12px rgba(0,0,0,0.9); }
@@ -194,9 +195,9 @@
       }
     }
     
-    /* HOME PAGE - HERO WITH CLOUDINARY VIDEO BACKGROUND */
+    /* HOME PAGE - HERO WITH NATIVE VIDEO BACKGROUND (Perfect Mobile Support) */
     .hero {
-      min-height: calc(100vh - 70px);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -205,24 +206,16 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Video Background Container */
+    /* Native Video Background - Scales perfectly on all phones */
     .hero-video-bg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       z-index: 0;
       pointer-events: none;
-    }
-    .hero-video-bg iframe {
-      width: 100% !important;
-      height: 100% !important;
-      border: none !important;
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      overflow: hidden !important;
     }
     /* Lighter overlay to let the video SHINE, but keep text readable */
     .hero::after {
@@ -302,20 +295,20 @@
       transform: translateY(-4px) scale(1.05);
     }
     
-    /* Unmute Button for Video */
+    /* Unmute Button for Video (Required by mobile browsers) */
     .unmute-btn {
       position: absolute;
-      bottom: 30px;
+      bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 3;
-      background: rgba(139, 0, 0, 0.8);
+      z-index: 5;
+      background: rgba(139, 0, 0, 0.9);
       color: var(--gold);
       border: 2px solid var(--gold);
-      padding: 12px 24px;
+      padding: 14px 28px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       backdrop-filter: blur(8px);
       animation: pulseGlow 2s infinite;
@@ -323,8 +316,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-    .unmute-btn:hover {
+    .unmute-btn:hover, .unmute-btn:active {
       background: var(--gold);
       color: var(--black);
       transform: translateX(-50%) scale(1.05);
@@ -882,10 +876,15 @@
         font-size: 0.85rem;
       }
       .unmute-btn {
-        font-size: 0.8rem;
-        padding: 10px 18px;
-        bottom: 20px;
+        font-size: 0.85rem;
+        padding: 12px 24px;
+        bottom: 25px;
       }
+    }
+    @media (max-height: 600px) {
+      .hero { min-height: 100vh; }
+      .hero-content { padding: 10px; }
+      .hero p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -917,19 +916,14 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH CLOUDINARY VIDEO BACKGROUND ========== -->
+  <!-- ========== HOME PAGE WITH NATIVE VIDEO BACKGROUND ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Cloudinary Promo Video Background -->
-      <div class="hero-video-bg">
-        <iframe 
-          id="hero-video"
-          src="https://player.cloudinary.com/embed/?cloud_name=ya61yf8z&public_id=v14044g50000d9mighfog65ktlaitm5g&autoplay=true&muted=true" 
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
-          allowfullscreen 
-          style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;">
-        </iframe>
-      </div>
+      <!-- Native Cloudinary Video Background (Perfect Mobile Support) -->
+      <video id="hero-video" class="hero-video-bg" autoplay loop playsinline muted>
+        <source src="https://res.cloudinary.com/ya61yf8z/video/upload/v14044g50000d9mighfog65ktlaitm5g.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
       
       <!-- EP Coming Soon Banner -->
       <div class="ep-banner">
@@ -945,7 +939,7 @@
         </div>
       </div>
 
-      <!-- Unmute Button (Required by browsers to play sound) -->
+      <!-- Unmute Button (Required by mobile browsers to enable sound) -->
       <button onclick="unmuteTeaser()" class="unmute-btn" id="unmuteBtn">
         🔊 TAP TO UNMUTE EP TEASER
       </button>
@@ -1306,11 +1300,13 @@
       if(el) el.textContent = new Date().getFullYear();
     });
 
-    // Unmute Video Teaser Function
+    // Unmute Video Teaser Function (Works perfectly on Mobile)
     function unmuteTeaser() {
-      const iframe = document.getElementById('hero-video');
-      // Reloading with muted=false triggers the browser's "user interaction" allowance for audio
-      iframe.src = "https://player.cloudinary.com/embed/?cloud_name=ya61yf8z&public_id=v14044g50000d9mighfog65ktlaitm5g&autoplay=true&muted=false";
+      const video = document.getElementById('hero-video');
+      video.muted = false;
+      video.play().catch(function(error) {
+        console.log("Audio play failed:", error);
+      });
       document.getElementById('unmuteBtn').style.display = 'none';
     }
     
