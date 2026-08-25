@@ -195,7 +195,7 @@
       }
     }
     
-    /* HOME PAGE - HERO WITH NATIVE VIDEO BACKGROUND (Perfect Mobile Support) */
+    /* HOME PAGE - HERO WITH BULLETPROOF VIDEO BACKGROUND */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -206,7 +206,7 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Native Video Background - Scales perfectly on all phones */
+    /* Native Video Background - Optimized for Mobile */
     .hero-video-bg {
       position: absolute;
       top: 0;
@@ -215,9 +215,8 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
-      pointer-events: none;
     }
-    /* Lighter overlay to let the video SHINE, but keep text readable */
+    /* Overlay to let video shine but keep text readable */
     .hero::after {
       content: '';
       position: absolute;
@@ -295,33 +294,49 @@
       transform: translateY(-4px) scale(1.05);
     }
     
-    /* Unmute Button for Video (Required by mobile browsers) */
-    .unmute-btn {
+    /* BULLETPROOF TAP TO PLAY OVERLAY */
+    .video-overlay {
       position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-      background: rgba(139, 0, 0, 0.9);
-      color: var(--gold);
-      border: 2px solid var(--gold);
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
+      inset: 0;
+      background: rgba(11, 11, 11, 0.7);
       backdrop-filter: blur(8px);
-      animation: pulseGlow 2s infinite;
-      transition: all 0.3s ease;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.5s ease;
+    }
+    .play-btn {
+      width: 80px;
+      height: 80px;
+      background: var(--gold);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 0 30px rgba(255,215,0,0.5);
+      animation: pulseGlow 2s infinite;
     }
-    .unmute-btn:hover, .unmute-btn:active {
-      background: var(--gold);
-      color: var(--black);
-      transform: translateX(-50%) scale(1.05);
+    .play-btn svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--black);
+      margin-left: 4px; /* Optical centering for play icon */
+    }
+    .play-text {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.4); transform: scale(1); }
+      50% { box-shadow: 0 0 40px rgba(255,215,0,0.8); transform: scale(1.05); }
     }
     
     /* EP Coming Soon Banner */
@@ -345,10 +360,6 @@
       font-size: 0.95rem;
       letter-spacing: 0.05em;
       text-shadow: 0 0 10px rgba(255,215,0,0.5);
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 10px 40px rgba(255,215,0,0.3); }
-      50% { box-shadow: 0 15px 60px rgba(255,215,0,0.6); }
     }
     
     /* Section Headings */
@@ -875,11 +886,6 @@
       .ep-banner span {
         font-size: 0.85rem;
       }
-      .unmute-btn {
-        font-size: 0.85rem;
-        padding: 12px 24px;
-        bottom: 25px;
-      }
     }
     @media (max-height: 600px) {
       .hero { min-height: 100vh; }
@@ -916,14 +922,21 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH NATIVE VIDEO BACKGROUND ========== -->
+  <!-- ========== HOME PAGE WITH BULLETPROOF VIDEO ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Native Cloudinary Video Background (Perfect Mobile Support) -->
-      <video id="hero-video" class="hero-video-bg" autoplay loop playsinline muted>
-        <source src="https://res.cloudinary.com/ya61yf8z/video/upload/v14044g50000d9mighfog65ktlaitm5g.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+      <!-- Native Video with Poster Fallback & Mobile Optimizations -->
+      <video id="hero-video" class="hero-video-bg" loop playsinline muted poster="https://i.ibb.co/v47T2qyq/IMG-9029.jpg">
+        <source src="https://res.cloudinary.com/ya61yf8z/video/upload/q_50,c_fill,w_1080/v14044g50000d9mighfog65ktlaitm5g.mp4" type="video/mp4">
       </video>
+      
+      <!-- BULLETPROOF TAP TO PLAY OVERLAY (Bypasses iPhone restrictions) -->
+      <div class="video-overlay" id="video-overlay" onclick="enableVideo()">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="play-text">TAP TO PLAY EP TEASER</div>
+      </div>
       
       <!-- EP Coming Soon Banner -->
       <div class="ep-banner">
@@ -938,11 +951,6 @@
           <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;">📅 Book Now</a>
         </div>
       </div>
-
-      <!-- Unmute Button (Required by mobile browsers to enable sound) -->
-      <button onclick="unmuteTeaser()" class="unmute-btn" id="unmuteBtn">
-        🔊 TAP TO UNMUTE EP TEASER
-      </button>
     </section>
     <!-- Footer on Home Page -->
     <footer class="page-footer">
@@ -1008,213 +1016,114 @@
           </div>
         </div>
         
-        <!-- Gallery Item 1 -->
+        <!-- Gallery Items (1-10) -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
           <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="FOM Moment">
           <div class="gallery-overlay">
             <span class="gallery-title">FOM Moments</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">124</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('FOM Moments', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">32</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">18</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">124</span></button>
+              <button class="interaction-btn" onclick="openComment('FOM Moments', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">32</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">18</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 2 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg')">
           <img src="https://i.ibb.co/wF4PTgzs/IMG-9024.jpg" alt="Behind Scenes">
           <div class="gallery-overlay">
             <span class="gallery-title">Behind Scenes</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">89</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Behind Scenes', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">21</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">14</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">89</span></button>
+              <button class="interaction-btn" onclick="openComment('Behind Scenes', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">21</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/wF4PTgzs/IMG-9024.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">14</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 3 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/v47T2qyq/IMG-9029.jpg')">
           <img src="https://i.ibb.co/v47T2qyq/IMG-9029.jpg" alt="Lifestyle">
           <div class="gallery-overlay">
             <span class="gallery-title">Lifestyle</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">256</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Lifestyle', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">67</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/v47T2qyq/IMG-9029.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">43</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">256</span></button>
+              <button class="interaction-btn" onclick="openComment('Lifestyle', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">67</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/v47T2qyq/IMG-9029.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">43</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 4 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg')">
           <img src="https://i.ibb.co/60Pwk5h6/IMG-9030.jpg" alt="Vibes">
           <div class="gallery-overlay">
             <span class="gallery-title">Vibes</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">178</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Vibes', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">45</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">29</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">178</span></button>
+              <button class="interaction-btn" onclick="openComment('Vibes', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">45</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/60Pwk5h6/IMG-9030.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">29</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 5 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/KRhYLPz/IMG-9032.jpg')">
           <img src="https://i.ibb.co/KRhYLPz/IMG-9032.jpg" alt="Style">
           <div class="gallery-overlay">
             <span class="gallery-title">Style</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">312</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Style', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">88</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/KRhYLPz/IMG-9032.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">56</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">312</span></button>
+              <button class="interaction-btn" onclick="openComment('Style', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">88</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/KRhYLPz/IMG-9032.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">56</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 6 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg')">
           <img src="https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg" alt="Energy">
           <div class="gallery-overlay">
             <span class="gallery-title">Energy</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">145</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Energy', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">34</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">22</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">145</span></button>
+              <button class="interaction-btn" onclick="openComment('Energy', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">34</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Y6Lkw5W/IMG-9033.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">22</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 7 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg')">
           <img src="https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg" alt="Moments">
           <div class="gallery-overlay">
             <span class="gallery-title">Moments</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">203</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Moments', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">51</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">37</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">203</span></button>
+              <button class="interaction-btn" onclick="openComment('Moments', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">51</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/Q3hSdsrt/IMG-9034.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">37</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 8 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg')">
           <img src="https://i.ibb.co/xqhcXdkN/IMG-9035.jpg" alt="Studio">
           <div class="gallery-overlay">
             <span class="gallery-title">Studio</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">167</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Studio', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">39</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">26</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">167</span></button>
+              <button class="interaction-btn" onclick="openComment('Studio', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">39</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/xqhcXdkN/IMG-9035.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">26</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 9 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg')">
           <img src="https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg" alt="Performance">
           <div class="gallery-overlay">
             <span class="gallery-title">Performance</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">289</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Performance', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">73</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">48</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">289</span></button>
+              <button class="interaction-btn" onclick="openComment('Performance', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">73</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/cSNvqvzQ/IMG-9036.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">48</span></button>
             </div>
           </div>
         </div>
-        <!-- Gallery Item 10 -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/8G496dW/IMG-9037.jpg')">
           <img src="https://i.ibb.co/8G496dW/IMG-9037.jpg" alt="Excellence">
           <div class="gallery-overlay">
             <span class="gallery-title">Excellence</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">234</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('Excellence', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">58</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/8G496dW/IMG-9037.jpg', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">41</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">234</span></button>
+              <button class="interaction-btn" onclick="openComment('Excellence', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">58</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/8G496dW/IMG-9037.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">41</span></button>
             </div>
           </div>
         </div>
@@ -1268,7 +1177,6 @@
           <a href="https://www.instagram.com/yo_mick1?igsh=dXU5OHZmN2QzajR5&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
           <a href="https://snapchat.com/t/JnglfKQf" target="_blank" rel="noopener noreferrer" class="social-link">Snapchat</a>
         </div>
-        <!-- TikTok Screenshot in Connect Section Too -->
         <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.4); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
           <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates</p>
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="TikTok" style="max-width: 300px; border-radius: 12px; border: 2px solid var(--gold);">
@@ -1300,41 +1208,47 @@
       if(el) el.textContent = new Date().getFullYear();
     });
 
-    // Unmute Video Teaser Function (Works perfectly on Mobile)
-    function unmuteTeaser() {
+    // BULLETPROOF VIDEO PLAY FUNCTION (Bypasses all iPhone restrictions)
+    function enableVideo() {
       const video = document.getElementById('hero-video');
+      const overlay = document.getElementById('video-overlay');
+      
+      // 1. Unmute the video (allowed because user tapped)
       video.muted = false;
-      video.play().catch(function(error) {
-        console.log("Audio play failed:", error);
+      
+      // 2. Play the video
+      video.play().then(() => {
+        // 3. Fade out and remove the overlay
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 500);
+      }).catch(error => {
+        console.log("Video play failed:", error);
+        // Fallback: If it still fails, just hide overlay so they see the poster
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.display = 'none'; }, 500);
       });
-      document.getElementById('unmuteBtn').style.display = 'none';
     }
+
+    // Attempt autoplay on load (will work on desktop, gracefully fail on restricted mobile)
+    window.addEventListener('load', () => {
+      const video = document.getElementById('hero-video');
+      video.play().catch(() => {
+        // Autoplay blocked by mobile OS, keep overlay visible for user to tap
+        console.log("Autoplay blocked, waiting for user tap");
+      });
+    });
     
     // ========== PAGE NAVIGATION ==========
     function showPage(pageId, event) {
       if(event) event.preventDefault();
-      
-      // Hide all pages
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      
-      // Show selected page
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
-      
-      // Update nav links active state
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-      });
-      
-      // Find and activate the correct nav link
+      document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
       const navLinks = document.querySelectorAll('.nav-links a');
       const pageMap = { 'home': 0, 'about': 1, 'gallery': 2, 'booking': 3, 'connect': 4 };
-      if(navLinks[pageMap[pageId]]) {
-        navLinks[pageMap[pageId]].classList.add('active');
-      }
-      
-      // Scroll to top
+      if(navLinks[pageMap[pageId]]) navLinks[pageMap[pageId]].classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
@@ -1346,7 +1260,6 @@
       hamburger.classList.toggle('active');
       document.body.style.overflow = menu.classList.contains('show') ? 'hidden' : 'auto';
     }
-    
     function closeMobileMenu() {
       document.getElementById('mobileMenu').classList.remove('show');
       document.getElementById('hamburger').classList.remove('active');
@@ -1356,11 +1269,8 @@
     // ========== NAVBAR SCROLL EFFECT ==========
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
-      if(window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      if(window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
     });
     
     // ========== LIGHTBOX ==========
@@ -1369,14 +1279,12 @@
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-    
     function closeLightbox(e) {
       if (e.target.classList.contains('lightbox') || e.target.classList.contains('lightbox-close')) {
         document.getElementById('lightbox').classList.remove('active');
         document.body.style.overflow = 'auto';
       }
     }
-    
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.getElementById('lightbox').classList.remove('active');
@@ -1391,39 +1299,30 @@
         text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Coming Soon!',
         url: window.location.href
       };
-      
       try {
-        if (navigator.share) {
-          await navigator.share(shareData);
-        } else {
+        if (navigator.share) await navigator.share(shareData);
+        else {
           await navigator.clipboard.writeText(window.location.href);
           alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍');
         }
-      } catch (err) {
-        console.log('Share cancelled or failed');
-      }
+      } catch (err) { console.log('Share cancelled or failed'); }
     }
     
     // ========== SHARE INDIVIDUAL IMAGE ==========
     async function shareImage(imgUrl, event) {
       if(event) event.stopPropagation();
-      
       const shareData = {
         title: 'Face Of Monrovia - Gallery',
         text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Coming Soon!',
         url: imgUrl
       };
-      
       try {
-        if (navigator.share) {
-          await navigator.share(shareData);
-        } else {
+        if (navigator.share) await navigator.share(shareData);
+        else {
           await navigator.clipboard.writeText(imgUrl);
           alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍');
         }
-      } catch (err) {
-        console.log('Share cancelled');
-      }
+      } catch (err) { console.log('Share cancelled'); }
     }
     
     // ========== LIKE BUTTON TOGGLE ==========
@@ -1433,15 +1332,11 @@
       const countEl = btn.querySelector('.count');
       let count = parseInt(countEl.textContent) || 0;
       countEl.textContent = btn.classList.contains('liked') ? count + 1 : Math.max(0, count - 1);
-      
-      // Small animation
       btn.querySelector('svg').style.transform = 'scale(1.3)';
-      setTimeout(() => {
-        btn.querySelector('svg').style.transform = '';
-      }, 200);
+      setTimeout(() => { btn.querySelector('svg').style.transform = ''; }, 200);
     }
     
-    // ========== COMMENT BUTTON (Demo) ==========
+    // ========== COMMENT BUTTON ==========
     function openComment(title, event) {
       if(event) event.stopPropagation();
       alert(`💬 Comments for "${title}"\n\nThis feature connects to WhatsApp!\n\nTap the 💬 floating button to send your comment directly to Face Of Monrovia's team. 🌍✨`);
@@ -1455,10 +1350,8 @@
       const type = document.getElementById('type').value;
       const budget = document.getElementById('budget').value;
       const message = document.getElementById('message').value;
-      
       const text = `🎤 BOOKING INQUIRY\nName: ${name}\nWhatsApp: ${whatsapp}\nEvent: ${type}\nBudget: ${budget}\nMessage: ${message}`;
       const url = `https://wa.me/233240254680?text=${encodeURIComponent(text)}`;
-      
       window.open(url, '_blank');
       e.target.reset();
     }
@@ -1476,7 +1369,6 @@
           }
         });
       }, { threshold: 0.1 });
-      
       items.forEach(item => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(40px) rotateY(-15deg)';
