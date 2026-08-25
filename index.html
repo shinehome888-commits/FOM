@@ -194,7 +194,7 @@
       }
     }
     
-    /* HOME PAGE - HERO WITH ROTATING VIDEO BACKGROUND */
+    /* HOME PAGE - HERO WITH CLOUDINARY VIDEO BACKGROUND */
     .hero {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -205,7 +205,7 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Rotating Video Background Container */
+    /* Video Background Container */
     .hero-video-bg {
       position: absolute;
       top: 0;
@@ -214,12 +214,6 @@
       height: 100%;
       z-index: 0;
       pointer-events: none;
-      animation: rotate360 120s linear infinite; /* 360° clockwise over 120 seconds */
-      transform-origin: center center;
-    }
-    @keyframes rotate360 {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
     }
     .hero-video-bg iframe {
       width: 100% !important;
@@ -230,15 +224,12 @@
       top: 0 !important;
       overflow: hidden !important;
     }
-    /* Transparent overlay for text readability */
+    /* Lighter overlay to let the video SHINE, but keep text readable */
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, 
-        rgba(11,11,11,0.75) 0%, 
-        rgba(139,0,0,0.4) 45%, 
-        rgba(11,11,11,0.85) 100%);
+      background: radial-gradient(circle at center, rgba(11,11,11,0.2) 0%, rgba(11,11,11,0.6) 60%, rgba(11,11,11,0.9) 100%);
       z-index: 1;
       pointer-events: none;
     }
@@ -309,6 +300,34 @@
       background: var(--gold);
       color: var(--black);
       transform: translateY(-4px) scale(1.05);
+    }
+    
+    /* Unmute Button for Video */
+    .unmute-btn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      background: rgba(139, 0, 0, 0.8);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      animation: pulseGlow 2s infinite;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .unmute-btn:hover {
+      background: var(--gold);
+      color: var(--black);
+      transform: translateX(-50%) scale(1.05);
     }
     
     /* EP Coming Soon Banner */
@@ -862,8 +881,10 @@
       .ep-banner span {
         font-size: 0.85rem;
       }
-      .hero-video-bg {
-        min-height: 60vh;
+      .unmute-btn {
+        font-size: 0.8rem;
+        padding: 10px 18px;
+        bottom: 20px;
       }
     }
   </style>
@@ -896,19 +917,17 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH ROTATING VIDEO BACKGROUND ========== -->
+  <!-- ========== HOME PAGE WITH CLOUDINARY VIDEO BACKGROUND ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Streamable Promo Video Background - Playing, Looping, Rotating -->
+      <!-- Cloudinary Promo Video Background -->
       <div class="hero-video-bg">
         <iframe 
-          src="https://streamable.com/e/0rx2xo?loop=1&autoplay=1&muted=1" 
-          allow="autoplay; fullscreen; picture-in-picture" 
+          id="hero-video"
+          src="https://player.cloudinary.com/embed/?cloud_name=ya61yf8z&public_id=v14044g50000d9mighfog65ktlaitm5g&autoplay=true&muted=true" 
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
           allowfullscreen 
-          style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"
-          muted
-          playsinline
-          webkit-playsinline>
+          style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;">
         </iframe>
       </div>
       
@@ -925,6 +944,11 @@
           <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;">📅 Book Now</a>
         </div>
       </div>
+
+      <!-- Unmute Button (Required by browsers to play sound) -->
+      <button onclick="unmuteTeaser()" class="unmute-btn" id="unmuteBtn">
+        🔊 TAP TO UNMUTE EP TEASER
+      </button>
     </section>
     <!-- Footer on Home Page -->
     <footer class="page-footer">
@@ -1281,6 +1305,14 @@
     document.querySelectorAll('[id^="year-"]').forEach(el => {
       if(el) el.textContent = new Date().getFullYear();
     });
+
+    // Unmute Video Teaser Function
+    function unmuteTeaser() {
+      const iframe = document.getElementById('hero-video');
+      // Reloading with muted=false triggers the browser's "user interaction" allowance for audio
+      iframe.src = "https://player.cloudinary.com/embed/?cloud_name=ya61yf8z&public_id=v14044g50000d9mighfog65ktlaitm5g&autoplay=true&muted=false";
+      document.getElementById('unmuteBtn').style.display = 'none';
+    }
     
     // ========== PAGE NAVIGATION ==========
     function showPage(pageId, event) {
