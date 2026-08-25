@@ -44,18 +44,18 @@
       left: 0;
       right: 0;
       height: 70px;
-      background: rgba(11, 11, 11, 0.9);
+      background: rgba(11, 11, 11, 0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 215, 0, 0.2);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 30px;
+      padding: 0 20px;
       transition: all 0.3s ease;
     }
     .navbar.scrolled {
-      background: rgba(11, 11, 11, 0.95);
+      background: rgba(11, 11, 11, 0.98);
       box-shadow: 0 5px 30px rgba(0,0,0,0.5);
     }
     .nav-logo {
@@ -67,11 +67,31 @@
       text-shadow: 0 0 10px rgba(255,215,0,0.4);
       letter-spacing: 0.05em;
       cursor: pointer;
+      flex-shrink: 0;
     }
+    
+    /* NEW EP BADGE IN NAVBAR */
+    .ep-badge {
+      background: rgba(139, 0, 0, 0.8);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      animation: pulseGlow 2s infinite;
+      white-space: nowrap;
+      margin: 0 15px;
+      backdrop-filter: blur(5px);
+      flex-shrink: 0;
+    }
+    
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: 24px;
       list-style: none;
+      flex-shrink: 0;
     }
     .nav-links li a {
       color: #ccc;
@@ -112,6 +132,7 @@
       cursor: pointer;
       padding: 10px;
       z-index: 1001;
+      flex-shrink: 0;
     }
     .hamburger span {
       width: 28px;
@@ -206,7 +227,6 @@
       overflow: hidden;
       perspective: 1200px;
     }
-    /* Native Video Background - Optimized for Mobile */
     .hero-video-bg {
       position: absolute;
       top: 0;
@@ -216,7 +236,6 @@
       object-fit: cover;
       z-index: 0;
     }
-    /* Overlay to let video shine but keep text readable */
     .hero::after {
       content: '';
       position: absolute;
@@ -324,7 +343,7 @@
       width: 32px;
       height: 32px;
       fill: var(--black);
-      margin-left: 4px; /* Optical centering for play icon */
+      margin-left: 4px;
     }
     .play-text {
       color: var(--gold);
@@ -339,29 +358,6 @@
       50% { box-shadow: 0 0 40px rgba(255,215,0,0.8); transform: scale(1.05); }
     }
     
-    /* EP Coming Soon Banner */
-    .ep-banner {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, rgba(139,0,0,0.9), rgba(11,11,11,0.95));
-      border: 2px solid var(--gold);
-      border-radius: 50px;
-      padding: 12px 28px;
-      z-index: 3;
-      animation: pulseGlow 2s infinite;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(255,215,0,0.3);
-    }
-    .ep-banner span {
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      text-shadow: 0 0 10px rgba(255,215,0,0.5);
-    }
-    
     /* Section Headings */
     .section-title {
       text-align: center;
@@ -371,14 +367,15 @@
       text-shadow: 0 0 20px rgba(255,215,0,0.4);
     }
     
-    /* ABOUT PAGE */
+    /* ABOUT PAGE WITH BOLD BACKGROUND */
     .about-container {
       min-height: calc(100vh - 70px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
-      background: linear-gradient(135deg, #0a0a0a, #111, #0a0a0a);
+      /* Bold, transparent background image */
+      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.7)), url('https://i.ibb.co/RGyfr6z3/IMG-9534.jpg') center/cover no-repeat;
       flex-direction: column;
     }
     .about-wrapper {
@@ -393,7 +390,7 @@
     .about-card {
       flex: 1;
       min-width: 300px;
-      max-width: 500px;
+      max-width: 600px;
       background: rgba(11,11,11,0.6);
       border: 2px solid rgba(255,215,0,0.2);
       border-radius: 24px;
@@ -416,68 +413,15 @@
     .about-text {
       text-align: center;
       font-size: 1.15rem;
-      color: #ddd;
+      color: #f0f0f0;
       line-height: 1.9;
     }
     .about-text strong { color: var(--gold); }
     
-    /* 3D Moving Image */
-    .about-image {
-      flex: 1;
-      min-width: 300px;
-      max-width: 450px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 1000px;
-    }
-    .moving-frame {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 3px solid rgba(255,215,0,0.3);
-      box-shadow: 0 25px 70px rgba(255,215,0,0.2);
-      animation: moveRightToLeft 12s ease-in-out infinite alternate, float3D 6s ease-in-out infinite;
-      transform-style: preserve-3d;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .moving-frame:hover {
-      transform: scale(1.03) rotateY(5deg);
-      box-shadow: 0 35px 90px rgba(255,215,0,0.4);
-      border-color: var(--gold);
-    }
-    @keyframes moveRightToLeft {
-      0% { transform: translateX(30px) rotateY(-5deg); }
-      100% { transform: translateX(-30px) rotateY(5deg); }
-    }
-    @keyframes float3D {
-      0%, 100% { transform: translateY(0) rotateX(0deg); }
-      50% { transform: translateY(-12px) rotateX(3deg); }
-    }
-    .moving-frame img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    .moving-frame:hover img {
-      transform: scale(1.08);
-    }
-    .image-glow {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,215,0,0.1), transparent 60%);
-      pointer-events: none;
-      border-radius: 20px;
-    }
-    
-    /* GALLERY PAGE */
+    /* GALLERY PAGE WITH BOLD BACKGROUND */
     .gallery-page {
       padding: 100px 20px 60px;
-      background: linear-gradient(to bottom, #111, var(--black));
+      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/GQvB7yvD/IMG-9522.jpg') center/cover no-repeat;
     }
     .gallery-grid {
       display: grid;
@@ -514,8 +458,6 @@
     .gallery-item:hover img {
       transform: scale(1.12);
     }
-    
-    /* Interactive Overlay */
     .gallery-overlay {
       position: absolute;
       inset: 0;
@@ -531,8 +473,6 @@
     .gallery-item:hover .gallery-overlay {
       opacity: 1;
     }
-    
-    /* Interactive Buttons */
     .interactive-bar {
       display: flex;
       justify-content: space-between;
@@ -575,7 +515,6 @@
     .interaction-btn:hover svg {
       transform: scale(1.2);
     }
-    
     .gallery-title {
       color: var(--gold);
       font-weight: 600;
@@ -583,8 +522,6 @@
       margin-bottom: 8px;
       text-shadow: 0 0 10px rgba(255,215,0,0.3);
     }
-    
-    /* TikTok Screenshot Special */
     .tiktok-screenshot {
       grid-column: 1 / -1;
       border: 3px solid var(--gold);
@@ -599,7 +536,7 @@
       text-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
     
-    /* Lightbox - 3D Big View */
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -650,19 +587,19 @@
       transform: rotate(90deg) scale(1.1);
     }
     
-    /* BOOKING PAGE */
+    /* BOOKING PAGE WITH BOLD BACKGROUND */
     .booking-page {
       min-height: calc(100vh - 70px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 100px 20px 60px;
-      background: linear-gradient(135deg, #0a0a0a, #111, #0a0a0a);
+      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/F4Yfyh1z/IMG-9518.jpg') center/cover no-repeat;
     }
     .booking-card {
       max-width: 600px;
       width: 100%;
-      background: rgba(11,11,11,0.6);
+      background: rgba(11,11,11,0.7);
       border: 2px solid rgba(255,215,0,0.2);
       border-radius: 24px;
       padding: 50px 40px;
@@ -686,7 +623,7 @@
     .booking-form select {
       width: 100%;
       padding: 16px;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.5);
       border: 1px solid rgba(255,215,0,0.2);
       border-radius: 12px;
       color: white;
@@ -699,7 +636,7 @@
     .booking-form select:focus {
       outline: none;
       border-color: var(--gold);
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7);
       box-shadow: 0 0 20px rgba(255,215,0,0.15);
     }
     .booking-form button[type="submit"] {
@@ -711,7 +648,7 @@
       margin-top: 8px;
     }
     
-    /* CONNECT PAGE */
+    /* CONNECT PAGE WITH BOLD BACKGROUND */
     .connect-page {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -719,13 +656,13 @@
       align-items: center;
       justify-content: center;
       padding: 100px 20px 60px;
-      background: linear-gradient(to bottom, #0a0a0a, var(--black));
+      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/MkBMhWbh/IMG-9519.jpg') center/cover no-repeat;
       text-align: center;
     }
     .connect-card {
       max-width: 700px;
       width: 100%;
-      background: rgba(11,11,11,0.6);
+      background: rgba(11,11,11,0.7);
       border: 2px solid rgba(255,215,0,0.2);
       border-radius: 24px;
       padding: 50px 40px;
@@ -740,7 +677,7 @@
       border-color: rgba(255,215,0,0.4);
     }
     .connect-subtitle {
-      color: #aaa;
+      color: #f0f0f0;
       margin-bottom: 30px;
       font-size: 1.05rem;
     }
@@ -771,7 +708,7 @@
       box-shadow: 0 15px 40px rgba(255,215,0,0.4);
     }
     
-    /* ========== FOOTER (ON EVERY PAGE) ========== */
+    /* ========== FOOTER ========== */
     .page-footer {
       text-align: center;
       padding: 25px 20px;
@@ -826,10 +763,6 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-12px); }
     }
-    @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 8px 35px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.3); }
-      50% { box-shadow: 0 8px 35px rgba(255,215,0,0.9), 0 0 45px rgba(255,215,0,0.6); }
-    }
     .share-tooltip {
       position: absolute;
       bottom: 75px;
@@ -855,6 +788,11 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
+      .ep-badge { 
+        font-size: 0.7rem; 
+        padding: 4px 10px; 
+        margin: 0 10px; 
+      }
       .hero h1 { font-size: 2.8rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .btn { width: 90%; max-width: 300px; }
@@ -874,18 +812,10 @@
         width: 45px;
         height: 45px;
       }
-      .navbar { padding: 0 20px; }
+      .navbar { padding: 0 15px; }
       .nav-logo { font-size: 1.1rem; }
-      .moving-frame { max-width: 320px; }
       .share-float { width: 56px; height: 56px; font-size: 1.4rem; bottom: 20px; right: 20px; }
       .share-tooltip { display: none; }
-      .ep-banner {
-        top: 15px;
-        padding: 10px 20px;
-      }
-      .ep-banner span {
-        font-size: 0.85rem;
-      }
     }
     @media (max-height: 600px) {
       .hero { min-height: 100vh; }
@@ -899,6 +829,10 @@
   <!-- ========== NAVIGATION BAR ========== -->
   <nav class="navbar" id="navbar">
     <a class="nav-logo" onclick="showPage('home')">FOM</a>
+    
+    <!-- EP BADGE MOVED TO NAVBAR -->
+    <div class="ep-badge">🔥 NEW EP COMING SOON 🔥</div>
+    
     <ul class="nav-links">
       <li><a href="#" class="active" onclick="showPage('home', event)">Home</a></li>
       <li><a href="#" onclick="showPage('about', event)">The Artist</a></li>
@@ -922,25 +856,18 @@
     <a href="#" onclick="showPage('connect'); closeMobileMenu();">Connect</a>
   </div>
 
-  <!-- ========== HOME PAGE WITH BULLETPROOF VIDEO ========== -->
+  <!-- ========== HOME PAGE ========== -->
   <div class="page active" id="home">
     <section class="hero">
-      <!-- Native Video with Poster Fallback & Mobile Optimizations -->
       <video id="hero-video" class="hero-video-bg" loop playsinline muted poster="https://i.ibb.co/v47T2qyq/IMG-9029.jpg">
         <source src="https://res.cloudinary.com/ya61yf8z/video/upload/q_50,c_fill,w_1080/v14044g50000d9mighfog65ktlaitm5g.mp4" type="video/mp4">
       </video>
       
-      <!-- BULLETPROOF TAP TO PLAY OVERLAY (Bypasses iPhone restrictions) -->
       <div class="video-overlay" id="video-overlay" onclick="enableVideo()">
         <div class="play-btn">
           <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </div>
         <div class="play-text">TAP TO PLAY EP TEASER</div>
-      </div>
-      
-      <!-- EP Coming Soon Banner -->
-      <div class="ep-banner">
-        <span>🔥 NEW EP COMING SOON 🔥</span>
       </div>
       
       <div class="hero-content">
@@ -952,14 +879,13 @@
         </div>
       </div>
     </section>
-    <!-- Footer on Home Page -->
     <footer class="page-footer">
       <p class="copyright">© <span id="year-home"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </div>
 
-  <!-- ========== ARTIST PAGE ========== -->
+  <!-- ========== ARTIST PAGE (Picture Removed, Bold Background Added) ========== -->
   <div class="page" id="about">
     <div class="about-container">
       <h2 class="section-title font-display glow">The Artist</h2>
@@ -973,50 +899,31 @@
             <strong>Bold. Soulful. Stylish. Global.</strong>
           </p>
         </div>
-        <!-- 3D Moving Image -->
-        <div class="about-image">
-          <div class="moving-frame" onclick="openLightbox('https://i.ibb.co/DPWbXdZ2/IMG-9032.jpg')">
-            <img src="https://i.ibb.co/DPWbXdZ2/IMG-9032.jpg" alt="Face Of Monrovia">
-            <div class="image-glow"></div>
-          </div>
-        </div>
       </div>
     </div>
-    <!-- Footer on Artist Page -->
     <footer class="page-footer">
       <p class="copyright">© <span id="year-about"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </div>
 
-  <!-- ========== GALLERY PAGE WITH TIKTOK SCREENSHOT ========== -->
+  <!-- ========== GALLERY PAGE (Bold Background Added) ========== -->
   <div class="page" id="gallery">
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
-        <!-- TikTok Screenshot - Featured -->
         <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
           <div class="gallery-overlay">
             <span class="gallery-title">🎵 Follow on TikTok • EP Coming Soon</span>
             <div class="interactive-bar">
-              <button class="interaction-btn" onclick="toggleLike(this, event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="count">1.2K</span>
-              </button>
-              <button class="interaction-btn" onclick="openComment('TikTok', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span class="count">342</span>
-              </button>
-              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/nMLRXQdy/IMG-9516.png', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                <span class="count">89</span>
-              </button>
+              <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">1.2K</span></button>
+              <button class="interaction-btn" onclick="openComment('TikTok', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">342</span></button>
+              <button class="interaction-btn" onclick="shareImage('https://i.ibb.co/nMLRXQdy/IMG-9516.png', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">89</span></button>
             </div>
           </div>
         </div>
         
-        <!-- Gallery Items (1-10) -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
           <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="FOM Moment">
           <div class="gallery-overlay">
@@ -1129,14 +1036,13 @@
         </div>
       </div>
     </div>
-    <!-- Footer on Gallery Page -->
     <footer class="page-footer">
       <p class="copyright">© <span id="year-gallery"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </div>
 
-  <!-- ========== BOOKING PAGE ========== -->
+  <!-- ========== BOOKING PAGE (Bold Background Added) ========== -->
   <div class="page" id="booking">
     <div class="booking-page">
       <div class="booking-card">
@@ -1157,14 +1063,13 @@
         </form>
       </div>
     </div>
-    <!-- Footer on Booking Page -->
     <footer class="page-footer">
       <p class="copyright">© <span id="year-booking"></span> Face Of Monrovia. All Rights Reserved.</p>
       <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
     </footer>
   </div>
 
-  <!-- ========== CONNECT PAGE ========== -->
+  <!-- ========== CONNECT PAGE (Bold Background Added) ========== -->
   <div class="page" id="connect">
     <div class="connect-page">
       <div class="connect-card">
@@ -1177,12 +1082,11 @@
           <a href="https://www.instagram.com/yo_mick1?igsh=dXU5OHZmN2QzajR5&amp;utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
           <a href="https://snapchat.com/t/JnglfKQf" target="_blank" rel="noopener noreferrer" class="social-link">Snapchat</a>
         </div>
-        <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.4); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
+        <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.5); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
           <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates</p>
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="TikTok" style="max-width: 300px; border-radius: 12px; border: 2px solid var(--gold);">
         </div>
       </div>
-      <!-- Footer on Connect Page -->
       <footer class="page-footer" style="margin-top: 30px; background: transparent; border-top: 1px solid rgba(255,215,0,0.1);">
         <p class="copyright">© <span id="year-connect"></span> Face Of Monrovia. All Rights Reserved.</p>
         <p class="trademark">Powered by KS1 Empire Global Foundation (KS1EGF)</p>
@@ -1203,44 +1107,31 @@
   <span class="share-tooltip">Share FOM Website</span>
 
   <script>
-    // Auto-update year on all footer elements
     document.querySelectorAll('[id^="year-"]').forEach(el => {
       if(el) el.textContent = new Date().getFullYear();
     });
 
-    // BULLETPROOF VIDEO PLAY FUNCTION (Bypasses all iPhone restrictions)
     function enableVideo() {
       const video = document.getElementById('hero-video');
       const overlay = document.getElementById('video-overlay');
-      
-      // 1. Unmute the video (allowed because user tapped)
       video.muted = false;
-      
-      // 2. Play the video
       video.play().then(() => {
-        // 3. Fade out and remove the overlay
         overlay.style.opacity = '0';
-        setTimeout(() => {
-          overlay.style.display = 'none';
-        }, 500);
+        setTimeout(() => { overlay.style.display = 'none'; }, 500);
       }).catch(error => {
         console.log("Video play failed:", error);
-        // Fallback: If it still fails, just hide overlay so they see the poster
         overlay.style.opacity = '0';
         setTimeout(() => { overlay.style.display = 'none'; }, 500);
       });
     }
 
-    // Attempt autoplay on load (will work on desktop, gracefully fail on restricted mobile)
     window.addEventListener('load', () => {
       const video = document.getElementById('hero-video');
       video.play().catch(() => {
-        // Autoplay blocked by mobile OS, keep overlay visible for user to tap
         console.log("Autoplay blocked, waiting for user tap");
       });
     });
     
-    // ========== PAGE NAVIGATION ==========
     function showPage(pageId, event) {
       if(event) event.preventDefault();
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -1252,7 +1143,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // ========== MOBILE MENU ==========
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
       const hamburger = document.getElementById('hamburger');
@@ -1266,14 +1156,12 @@
       document.body.style.overflow = 'auto';
     }
     
-    // ========== NAVBAR SCROLL EFFECT ==========
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if(window.scrollY > 50) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
     });
     
-    // ========== LIGHTBOX ==========
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
@@ -1292,7 +1180,6 @@
       }
     });
     
-    // ========== SHARE WEBSITE ==========
     async function shareWebsite() {
       const shareData = {
         title: 'FACE OF MONROVIA | From Liberia to the World',
@@ -1308,7 +1195,6 @@
       } catch (err) { console.log('Share cancelled or failed'); }
     }
     
-    // ========== SHARE INDIVIDUAL IMAGE ==========
     async function shareImage(imgUrl, event) {
       if(event) event.stopPropagation();
       const shareData = {
@@ -1325,7 +1211,6 @@
       } catch (err) { console.log('Share cancelled'); }
     }
     
-    // ========== LIKE BUTTON TOGGLE ==========
     function toggleLike(btn, event) {
       if(event) event.stopPropagation();
       btn.classList.toggle('liked');
@@ -1336,13 +1221,11 @@
       setTimeout(() => { btn.querySelector('svg').style.transform = ''; }, 200);
     }
     
-    // ========== COMMENT BUTTON ==========
     function openComment(title, event) {
       if(event) event.stopPropagation();
       alert(`💬 Comments for "${title}"\n\nThis feature connects to WhatsApp!\n\nTap the 💬 floating button to send your comment directly to Face Of Monrovia's team. 🌍✨`);
     }
     
-    // ========== BOOKING FORM → WHATSAPP ==========
     function sendToWhatsApp(e) {
       e.preventDefault();
       const name = document.getElementById('name').value;
@@ -1356,7 +1239,6 @@
       e.target.reset();
     }
     
-    // ========== GALLERY 3D SCROLL ANIMATION ==========
     document.addEventListener('DOMContentLoaded', () => {
       const items = document.querySelectorAll('.gallery-item');
       const observer = new IntersectionObserver((entries) => {
