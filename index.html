@@ -11,9 +11,8 @@
     :root {
       --black: #0B0B0B;
       --gold: #FFD700;
-      --red: #8B0000;
       --white: #FFFFFF;
-      --glass: rgba(11, 11, 11, 0.7);
+      --glass: rgba(11, 11, 11, 0.6);
       --light-black: rgba(20, 20, 20, 0.85);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,9 +30,9 @@
     .glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 4px 12px rgba(0,0,0,0.9); }
     .glass {
       background: var(--glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 215, 0, 0.15);
-      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     
@@ -60,7 +59,7 @@
     }
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--gold);
       text-decoration: none;
@@ -70,21 +69,32 @@
       flex-shrink: 0;
     }
     
-    /* NEW EP BADGE IN NAVBAR */
+    /* PREMIUM WHITE EP BADGE WITH 3D FLEX */
     .ep-badge {
-      background: rgba(139, 0, 0, 0.8);
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      border-radius: 20px;
-      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--black);
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      padding: 8px 18px;
       font-size: 0.8rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.05em;
-      animation: pulseGlow 2s infinite;
+      animation: pulseGlowWhite 2.5s infinite;
       white-space: nowrap;
       margin: 0 15px;
       backdrop-filter: blur(5px);
       flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+    .ep-badge:hover {
+      transform: scale(1.05) rotateX(5deg) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+    }
+    @keyframes pulseGlowWhite {
+      0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6); }
     }
     
     .nav-links {
@@ -141,15 +151,9 @@
       transition: all 0.3s ease;
       border-radius: 2px;
     }
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
     
     /* Mobile Menu Overlay */
     .mobile-menu {
@@ -166,10 +170,7 @@
       opacity: 0;
       transition: opacity 0.4s ease;
     }
-    .mobile-menu.show {
-      display: flex;
-      opacity: 1;
-    }
+    .mobile-menu.show { display: flex; opacity: 1; }
     .mobile-menu a {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
@@ -179,10 +180,7 @@
       transform: translateY(20px);
       opacity: 0;
     }
-    .mobile-menu.show a {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    .mobile-menu.show a { transform: translateY(0); opacity: 1; }
     .mobile-menu.show a:nth-child(1) { transition-delay: 0.1s; }
     .mobile-menu.show a:nth-child(2) { transition-delay: 0.2s; }
     .mobile-menu.show a:nth-child(3) { transition-delay: 0.3s; }
@@ -202,21 +200,13 @@
       perspective: 1200px;
       animation: pageIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .page.active {
-      display: block;
-    }
+    .page.active { display: block; }
     @keyframes pageIn {
-      from {
-        opacity: 0;
-        transform: rotateY(-8deg) translateX(30px);
-      }
-      to {
-        opacity: 1;
-        transform: rotateY(0deg) translateX(0);
-      }
+      from { opacity: 0; transform: rotateY(-8deg) translateX(30px); }
+      to { opacity: 1; transform: rotateY(0deg) translateX(0); }
     }
     
-    /* HOME PAGE - HERO WITH BULLETPROOF VIDEO BACKGROUND */
+    /* HOME PAGE */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -287,7 +277,6 @@
       cursor: pointer;
       border: 2px solid transparent;
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       min-width: 200px;
     }
     .btn-gold {
@@ -313,7 +302,6 @@
       transform: translateY(-4px) scale(1.05);
     }
     
-    /* BULLETPROOF TAP TO PLAY OVERLAY */
     .video-overlay {
       position: absolute;
       inset: 0;
@@ -337,25 +325,15 @@
       justify-content: center;
       margin-bottom: 16px;
       box-shadow: 0 0 30px rgba(255,215,0,0.5);
-      animation: pulseGlow 2s infinite;
+      animation: pulseGlowWhite 2s infinite;
     }
-    .play-btn svg {
-      width: 32px;
-      height: 32px;
-      fill: var(--black);
-      margin-left: 4px;
-    }
+    .play-btn svg { width: 32px; height: 32px; fill: var(--black); margin-left: 4px; }
     .play-text {
       color: var(--gold);
       font-weight: 700;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-    }
-    
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.4); transform: scale(1); }
-      50% { box-shadow: 0 0 40px rgba(255,215,0,0.8); transform: scale(1.05); }
     }
     
     /* Section Headings */
@@ -367,15 +345,16 @@
       text-shadow: 0 0 20px rgba(255,215,0,0.4);
     }
     
-    /* ABOUT PAGE WITH BOLD BACKGROUND */
+    /* ABOUT PAGE - SUPERSTAR LAYOUT WITH FULL PICTURE & PERFECT BACKGROUND */
     .about-container {
       min-height: calc(100vh - 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
-      /* Bold, transparent background image */
-      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.7)), url('https://i.ibb.co/RGyfr6z3/IMG-9534.jpg') center/cover no-repeat;
+      padding: 60px 20px;
+      /* Lighter gradient so the background picture beauty shines through perfectly */
+      background: linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.6) 100%), 
+                  url('https://i.ibb.co/RGyfr6z3/IMG-9534.jpg') center top / cover no-repeat;
       flex-direction: column;
     }
     .about-wrapper {
@@ -383,45 +362,74 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 40px;
+      gap: 50px;
       max-width: 1100px;
       width: 100%;
     }
+    /* Stunning Full Picture Showcase */
+    .about-image-full {
+      flex: 1;
+      min-width: 320px;
+      max-width: 450px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3px solid rgba(255,215,0,0.4);
+      box-shadow: 0 25px 70px rgba(255,215,0,0.25);
+      animation: float3D 6s ease-in-out infinite;
+      position: relative;
+    }
+    .about-image-full::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,215,0,0.1), transparent 60%);
+      pointer-events: none;
+    }
+    .about-image-full img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .about-image-full:hover img {
+      transform: scale(1.05);
+    }
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0) rotateX(0deg); }
+      50% { transform: translateY(-12px) rotateX(2deg); }
+    }
+    
     .about-card {
       flex: 1;
-      min-width: 300px;
-      max-width: 600px;
-      background: rgba(11,11,11,0.6);
-      border: 2px solid rgba(255,215,0,0.2);
+      min-width: 320px;
+      max-width: 550px;
+      background: rgba(11,11,11,0.65);
+      border: 1px solid rgba(255,215,0,0.2);
       border-radius: 24px;
       padding: 40px;
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(20px);
       transform-style: preserve-3d;
       transition: transform 0.5s ease, box-shadow 0.5s ease;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,215,0,0.05);
-      animation: cardFloat 8s ease-in-out infinite;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
     .about-card:hover {
       transform: translateY(-10px) rotateX(3deg);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(255,215,0,0.1);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.1);
       border-color: rgba(255,215,0,0.4);
     }
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0) rotateX(0deg); }
-      50% { transform: translateY(-8px) rotateX(2deg); }
-    }
     .about-text {
-      text-align: center;
+      text-align: left;
       font-size: 1.15rem;
       color: #f0f0f0;
       line-height: 1.9;
     }
     .about-text strong { color: var(--gold); }
     
-    /* GALLERY PAGE WITH BOLD BACKGROUND */
+    /* GALLERY PAGE - PERFECT BACKGROUND FIT */
     .gallery-page {
       padding: 100px 20px 60px;
-      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/GQvB7yvD/IMG-9522.jpg') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.7) 100%), 
+                  url('https://i.ibb.co/GQvB7yvD/IMG-9522.jpg') center top / cover no-repeat;
     }
     .gallery-grid {
       display: grid;
@@ -455,13 +463,12 @@
       transition: transform 0.5s ease;
       display: block;
     }
-    .gallery-item:hover img {
-      transform: scale(1.12);
-    }
+    .gallery-item:hover img { transform: scale(1.12); }
+    
     .gallery-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(11,11,11,0.95), rgba(139,0,0,0.4) 40%, transparent 70%);
+      background: linear-gradient(to top, rgba(11,11,11,0.95), rgba(139,0,0,0.3) 40%, transparent 70%);
       opacity: 0;
       transition: opacity 0.4s ease;
       display: flex;
@@ -470,9 +477,8 @@
       padding: 20px;
       border-radius: 20px;
     }
-    .gallery-item:hover .gallery-overlay {
-      opacity: 1;
-    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    
     .interactive-bar {
       display: flex;
       justify-content: space-between;
@@ -501,20 +507,11 @@
       background: rgba(255,215,0,0.1);
       transform: scale(1.08);
     }
-    .interaction-btn.liked {
-      color: #ff4757;
-    }
-    .interaction-btn.liked:hover {
-      color: #ff6b81;
-    }
-    .interaction-btn svg {
-      width: 18px;
-      height: 18px;
-      transition: transform 0.2s ease;
-    }
-    .interaction-btn:hover svg {
-      transform: scale(1.2);
-    }
+    .interaction-btn.liked { color: #ff4757; }
+    .interaction-btn.liked:hover { color: #ff6b81; }
+    .interaction-btn svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+    .interaction-btn:hover svg { transform: scale(1.2); }
+    
     .gallery-title {
       color: var(--gold);
       font-weight: 600;
@@ -527,14 +524,8 @@
       border: 3px solid var(--gold);
       box-shadow: 0 0 40px rgba(255,215,0,0.3);
     }
-    .tiktok-screenshot img {
-      height: auto;
-      max-height: 400px;
-    }
-    .tiktok-screenshot .gallery-title {
-      font-size: 1.2rem;
-      text-shadow: 0 0 15px rgba(255,215,0,0.6);
-    }
+    .tiktok-screenshot img { height: auto; max-height: 400px; }
+    .tiktok-screenshot .gallery-title { font-size: 1.2rem; text-shadow: 0 0 15px rgba(255,215,0,0.6); }
     
     /* Lightbox */
     .lightbox {
@@ -548,10 +539,7 @@
       padding: 20px;
       backdrop-filter: blur(10px);
     }
-    .lightbox.active {
-      display: flex;
-      animation: lightboxIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .lightbox.active { display: flex; animation: lightboxIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     @keyframes lightboxIn {
       from { opacity: 0; transform: scale(0.8) rotateX(10deg); }
       to { opacity: 1; transform: scale(1) rotateX(0deg); }
@@ -582,45 +570,37 @@
       background: rgba(255,215,0,0.1);
       border: 2px solid rgba(255,215,0,0.3);
     }
-    .lightbox-close:hover {
-      background: rgba(255,215,0,0.3);
-      transform: rotate(90deg) scale(1.1);
-    }
+    .lightbox-close:hover { background: rgba(255,215,0,0.3); transform: rotate(90deg) scale(1.1); }
     
-    /* BOOKING PAGE WITH BOLD BACKGROUND */
+    /* BOOKING PAGE - PERFECT BACKGROUND FIT */
     .booking-page {
       min-height: calc(100vh - 70px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 100px 20px 60px;
-      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/F4Yfyh1z/IMG-9518.jpg') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.7) 100%), 
+                  url('https://i.ibb.co/F4Yfyh1z/IMG-9518.jpg') center top / cover no-repeat;
     }
     .booking-card {
       max-width: 600px;
       width: 100%;
-      background: rgba(11,11,11,0.7);
-      border: 2px solid rgba(255,215,0,0.2);
+      background: rgba(11,11,11,0.75);
+      border: 1px solid rgba(255,215,0,0.2);
       border-radius: 24px;
       padding: 50px 40px;
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(20px);
       transform-style: preserve-3d;
       transition: all 0.5s ease;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,215,0,0.05);
-      animation: cardFloat 8s ease-in-out infinite;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
     .booking-card:hover {
       transform: translateY(-8px) rotateX(2deg);
       border-color: rgba(255,215,0,0.4);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.1);
     }
-    .booking-form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .booking-form input,
-    .booking-form textarea,
-    .booking-form select {
+    .booking-form { display: flex; flex-direction: column; gap: 18px; }
+    .booking-form input, .booking-form textarea, .booking-form select {
       width: 100%;
       padding: 16px;
       background: rgba(0,0,0,0.5);
@@ -631,9 +611,7 @@
       transition: all 0.3s ease;
       font-family: 'Inter', sans-serif;
     }
-    .booking-form input:focus,
-    .booking-form textarea:focus,
-    .booking-form select:focus {
+    .booking-form input:focus, .booking-form textarea:focus, .booking-form select:focus {
       outline: none;
       border-color: var(--gold);
       background: rgba(0,0,0,0.7);
@@ -648,7 +626,7 @@
       margin-top: 8px;
     }
     
-    /* CONNECT PAGE WITH BOLD BACKGROUND */
+    /* CONNECT PAGE - PERFECT BACKGROUND FIT */
     .connect-page {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -656,38 +634,29 @@
       align-items: center;
       justify-content: center;
       padding: 100px 20px 60px;
-      background: linear-gradient(rgba(11,11,11,0.5), rgba(11,11,11,0.8)), url('https://i.ibb.co/MkBMhWbh/IMG-9519.jpg') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.7) 100%), 
+                  url('https://i.ibb.co/MkBMhWbh/IMG-9519.jpg') center top / cover no-repeat;
       text-align: center;
     }
     .connect-card {
       max-width: 700px;
       width: 100%;
-      background: rgba(11,11,11,0.7);
-      border: 2px solid rgba(255,215,0,0.2);
+      background: rgba(11,11,11,0.75);
+      border: 1px solid rgba(255,215,0,0.2);
       border-radius: 24px;
       padding: 50px 40px;
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(20px);
       transform-style: preserve-3d;
       transition: all 0.5s ease;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      animation: cardFloat 8s ease-in-out infinite;
     }
     .connect-card:hover {
       transform: translateY(-8px) rotateX(2deg);
       border-color: rgba(255,215,0,0.4);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.1);
     }
-    .connect-subtitle {
-      color: #f0f0f0;
-      margin-bottom: 30px;
-      font-size: 1.05rem;
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin: 30px 0;
-    }
+    .connect-subtitle { color: #f0f0f0; margin-bottom: 30px; font-size: 1.05rem; }
+    .social-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin: 30px 0; }
     .social-link {
       display: inline-block;
       padding: 14px 28px;
@@ -718,14 +687,8 @@
       font-size: 0.85rem;
       color: #777;
     }
-    .page-footer .trademark {
-      color: var(--gold);
-      font-weight: 600;
-    }
-    .page-footer .copyright {
-      margin-top: 8px;
-      opacity: 0.8;
-    }
+    .page-footer .trademark { color: var(--gold); font-weight: 600; }
+    .page-footer .copyright { margin-top: 8px; opacity: 0.8; }
     
     /* ========== FLOATING SHARE BUTTON ========== */
     .share-float {
@@ -744,7 +707,7 @@
       text-decoration: none;
       box-shadow: 0 8px 35px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.3);
       z-index: 1000;
-      animation: bounce 2s infinite, glowPulse 3s infinite;
+      animation: bounce 2s infinite, pulseGlowWhite 3s infinite;
       transition: all 0.3s ease;
       border: 2px solid rgba(255,215,0,0.5);
       cursor: pointer;
@@ -754,11 +717,8 @@
     .share-float:hover {
       transform: scale(1.15) rotate(10deg);
       box-shadow: 0 12px 50px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.5);
-      background: linear-gradient(135deg, #fff, var(--gold));
     }
-    .share-float:active {
-      transform: scale(0.95);
-    }
+    .share-float:active { transform: scale(0.95); }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-12px); }
@@ -780,38 +740,24 @@
       border: 1px solid rgba(255,215,0,0.3);
       backdrop-filter: blur(10px);
     }
-    .share-float:hover + .share-tooltip {
-      opacity: 1;
-    }
+    .share-float:hover + .share-tooltip { opacity: 1; }
     
     /* Responsive */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .ep-badge { 
-        font-size: 0.7rem; 
-        padding: 4px 10px; 
-        margin: 0 10px; 
-      }
+      .ep-badge { font-size: 0.7rem; padding: 6px 12px; margin: 0 10px; }
       .hero h1 { font-size: 2.8rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .btn { width: 90%; max-width: 300px; }
       .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
       .gallery-item img { height: 260px; }
-      .about-wrapper { flex-direction: column; }
-      .about-card, .booking-card, .connect-card { padding: 30px 24px; margin: 0 10px; }
-      .booking-form button[type="submit"] {
-        padding: 12px 24px;
-        font-size: 0.95rem;
-        min-width: 180px;
-      }
-      .lightbox-close {
-        top: 15px;
-        right: 20px;
-        font-size: 2.5rem;
-        width: 45px;
-        height: 45px;
-      }
+      .about-wrapper { flex-direction: column; gap: 30px; }
+      .about-image-full, .about-card { max-width: 100%; min-width: auto; }
+      .about-card { padding: 30px 24px; }
+      .booking-card, .connect-card { padding: 30px 24px; margin: 0 10px; }
+      .booking-form button[type="submit"] { padding: 12px 24px; font-size: 0.95rem; min-width: 180px; }
+      .lightbox-close { top: 15px; right: 20px; font-size: 2.5rem; width: 45px; height: 45px; }
       .navbar { padding: 0 15px; }
       .nav-logo { font-size: 1.1rem; }
       .share-float { width: 56px; height: 56px; font-size: 1.4rem; bottom: 20px; right: 20px; }
@@ -830,7 +776,7 @@
   <nav class="navbar" id="navbar">
     <a class="nav-logo" onclick="showPage('home')">FOM</a>
     
-    <!-- EP BADGE MOVED TO NAVBAR -->
+    <!-- PREMIUM WHITE EP BADGE -->
     <div class="ep-badge">🔥 NEW EP COMING SOON 🔥</div>
     
     <ul class="nav-links">
@@ -841,9 +787,7 @@
       <li><a href="#" onclick="showPage('connect', event)">Connect</a></li>
     </ul>
     <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
   </nav>
 
@@ -864,9 +808,7 @@
       </video>
       
       <div class="video-overlay" id="video-overlay" onclick="enableVideo()">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="play-text">TAP TO PLAY EP TEASER</div>
       </div>
       
@@ -885,11 +827,16 @@
     </footer>
   </div>
 
-  <!-- ========== ARTIST PAGE (Picture Removed, Bold Background Added) ========== -->
+  <!-- ========== ARTIST PAGE (FULL PICTURE SHOWCASE) ========== -->
   <div class="page" id="about">
     <div class="about-container">
       <h2 class="section-title font-display glow">The Artist</h2>
       <div class="about-wrapper">
+        <!-- Stunning Full Picture -->
+        <div class="about-image-full">
+          <img src="https://i.ibb.co/GQvB7yvD/IMG-9522.jpg" alt="Face Of Monrovia Full Picture">
+        </div>
+        <!-- Bio Card -->
         <div class="about-card">
           <p class="about-text">
             <strong>Face Of Monrovia (FOM)</strong> is Liberian born and raised in Liberia, now based in Accra, Ghana for studies. 
@@ -907,7 +854,7 @@
     </footer>
   </div>
 
-  <!-- ========== GALLERY PAGE (Bold Background Added) ========== -->
+  <!-- ========== GALLERY PAGE ========== -->
   <div class="page" id="gallery">
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
@@ -1042,7 +989,7 @@
     </footer>
   </div>
 
-  <!-- ========== BOOKING PAGE (Bold Background Added) ========== -->
+  <!-- ========== BOOKING PAGE ========== -->
   <div class="page" id="booking">
     <div class="booking-page">
       <div class="booking-card">
@@ -1069,7 +1016,7 @@
     </footer>
   </div>
 
-  <!-- ========== CONNECT PAGE (Bold Background Added) ========== -->
+  <!-- ========== CONNECT PAGE ========== -->
   <div class="page" id="connect">
     <div class="connect-page">
       <div class="connect-card">
@@ -1107,9 +1054,7 @@
   <span class="share-tooltip">Share FOM Website</span>
 
   <script>
-    document.querySelectorAll('[id^="year-"]').forEach(el => {
-      if(el) el.textContent = new Date().getFullYear();
-    });
+    document.querySelectorAll('[id^="year-"]').forEach(el => { if(el) el.textContent = new Date().getFullYear(); });
 
     function enableVideo() {
       const video = document.getElementById('hero-video');
@@ -1127,9 +1072,7 @@
 
     window.addEventListener('load', () => {
       const video = document.getElementById('hero-video');
-      video.play().catch(() => {
-        console.log("Autoplay blocked, waiting for user tap");
-      });
+      video.play().catch(() => { console.log("Autoplay blocked, waiting for user tap"); });
     });
     
     function showPage(pageId, event) {
@@ -1181,33 +1124,19 @@
     });
     
     async function shareWebsite() {
-      const shareData = {
-        title: 'FACE OF MONROVIA | From Liberia to the World',
-        text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Coming Soon!',
-        url: window.location.href
-      };
+      const shareData = { title: 'FACE OF MONROVIA | From Liberia to the World', text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Coming Soon!', url: window.location.href };
       try {
         if (navigator.share) await navigator.share(shareData);
-        else {
-          await navigator.clipboard.writeText(window.location.href);
-          alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍');
-        }
+        else { await navigator.clipboard.writeText(window.location.href); alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍'); }
       } catch (err) { console.log('Share cancelled or failed'); }
     }
     
     async function shareImage(imgUrl, event) {
       if(event) event.stopPropagation();
-      const shareData = {
-        title: 'Face Of Monrovia - Gallery',
-        text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Coming Soon!',
-        url: imgUrl
-      };
+      const shareData = { title: 'Face Of Monrovia - Gallery', text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Coming Soon!', url: imgUrl };
       try {
         if (navigator.share) await navigator.share(shareData);
-        else {
-          await navigator.clipboard.writeText(imgUrl);
-          alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍');
-        }
+        else { await navigator.clipboard.writeText(imgUrl); alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍'); }
       } catch (err) { console.log('Share cancelled'); }
     }
     
