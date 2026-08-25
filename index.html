@@ -57,6 +57,8 @@
       background: rgba(11, 11, 11, 0.98);
       box-shadow: 0 5px 30px rgba(0,0,0,0.5);
     }
+    
+    /* PREMIUM LOGO + TEXT COMBO */
     .nav-logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
@@ -67,6 +69,19 @@
       letter-spacing: 0.05em;
       cursor: pointer;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .nav-logo img {
+      height: 45px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(255,215,0,0.5));
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-logo:hover img {
+      transform: scale(1.1) rotate(5deg);
     }
     
     /* PREMIUM WHITE EP BADGE WITH 3D FLEX */
@@ -345,7 +360,7 @@
       text-shadow: 0 0 20px rgba(255,215,0,0.4);
     }
     
-    /* ABOUT PAGE - SUPERSTAR LAYOUT WITH FULL PICTURE & PERFECT BACKGROUND */
+    /* ABOUT PAGE */
     .about-container {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -421,7 +436,7 @@
     }
     .about-text strong { color: var(--gold); }
     
-    /* GALLERY PAGE - PERFECT BACKGROUND FIT */
+    /* GALLERY PAGE */
     .gallery-page {
       padding: 100px 20px 60px;
       background: linear-gradient(to bottom, rgba(11,11,11,0.3) 0%, rgba(11,11,11,0.7) 100%), 
@@ -435,7 +450,6 @@
       margin: 0 auto;
       perspective: 1000px;
     }
-    /* 3D EFFECT FOR ALL GALLERY ITEMS */
     .gallery-item {
       position: relative;
       overflow: hidden;
@@ -569,7 +583,7 @@
     }
     .lightbox-close:hover { background: rgba(255,215,0,0.3); transform: rotate(90deg) scale(1.1); }
     
-    /* BOOKING PAGE - PERFECT BACKGROUND FIT */
+    /* BOOKING PAGE */
     .booking-page {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -623,7 +637,7 @@
       margin-top: 8px;
     }
     
-    /* CONNECT PAGE - PERFECT BACKGROUND FIT */
+    /* CONNECT PAGE */
     .connect-page {
       min-height: calc(100vh - 70px);
       display: flex;
@@ -744,6 +758,8 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .ep-badge { font-size: 0.7rem; padding: 6px 12px; margin: 0 10px; }
+      .nav-logo { font-size: 1.2rem; gap: 6px; }
+      .nav-logo img { height: 35px; }
       .hero h1 { font-size: 2.8rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .btn { width: 90%; max-width: 300px; }
@@ -756,7 +772,6 @@
       .booking-form button[type="submit"] { padding: 12px 24px; font-size: 0.95rem; min-width: 180px; }
       .lightbox-close { top: 15px; right: 20px; font-size: 2.5rem; width: 45px; height: 45px; }
       .navbar { padding: 0 15px; }
-      .nav-logo { font-size: 1.1rem; }
       .share-float { width: 56px; height: 56px; font-size: 1.4rem; bottom: 20px; right: 20px; }
       .share-tooltip { display: none; }
     }
@@ -771,7 +786,10 @@
 
   <!-- ========== NAVIGATION BAR ========== -->
   <nav class="navbar" id="navbar">
-    <a class="nav-logo" onclick="showPage('home')">FOM</a>
+    <a class="nav-logo" onclick="showPage('home')">
+      <img src="https://i.ibb.co/gb1PF5wC/62-E4298-E-6370-4476-B3-CB-87661-EFABC16.png" alt="FOM Logo">
+      FOM
+    </a>
     <div class="ep-badge">🔥 NEW EP COMING SOON 🔥</div>
     <ul class="nav-links">
       <li><a href="#" class="active" onclick="showPage('home', event)">Home</a></li>
@@ -811,7 +829,7 @@
         <p>"From Liberia to the World" ✨</p>
         <div class="hero-buttons">
           <a href="#" class="btn btn-outline" onclick="showPage('connect'); return false;">Connect With FOM</a>
-          <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;"> Book Now</a>
+          <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;">📅 Book Now</a>
         </div>
       </div>
     </section>
@@ -846,13 +864,12 @@
     </footer>
   </div>
 
-  <!-- ========== GALLERY PAGE WITH ALL NEW 3D IMAGES ========== -->
+  <!-- ========== GALLERY PAGE ========== -->
   <div class="page" id="gallery">
     <div class="gallery-page">
       <h2 class="section-title font-display glow">Gallery</h2>
       <div class="gallery-grid">
         
-        <!-- TikTok Screenshot -->
         <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
           <div class="gallery-overlay">
@@ -865,7 +882,6 @@
           </div>
         </div>
 
-        <!-- Original Gallery Items -->
         <div class="gallery-item" onclick="openLightbox('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg')">
           <img src="https://i.ibb.co/b5G1g5jB/IMG-9023.jpg" alt="FOM Moment">
           <div class="gallery-overlay"><span class="gallery-title">FOM Moments</span><div class="interactive-bar"><button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">124</span></button><button class="interaction-btn" onclick="openComment('FOM Moments', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">32</span></button><button class="interaction-btn" onclick="shareImage('https://i.ibb.co/b5G1g5jB/IMG-9023.jpg', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span class="count">18</span></button></div></div>
