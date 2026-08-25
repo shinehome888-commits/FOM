@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP Coming Soon">
+  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP Drops September 3">
   <title>FACE OF MONROVIA | From Liberia to the World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -58,7 +58,7 @@
       box-shadow: 0 5px 30px rgba(0,0,0,0.5);
     }
     
-    /* PREMIUM LOGO + TEXT COMBO */
+    /* PREMIUM LOGO + TEXT COMBO WITH 3D SPIN */
     .nav-logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
@@ -72,19 +72,21 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      transition: all 0.3s ease;
+      perspective: 1000px;
     }
     .nav-logo img {
       height: 45px;
       width: auto;
       filter: drop-shadow(0 0 8px rgba(255,215,0,0.5));
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: spin3D 8s linear infinite;
+      transform-style: preserve-3d;
     }
-    .nav-logo:hover img {
-      transform: scale(1.1) rotate(5deg);
+    @keyframes spin3D {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
     }
     
-    /* PREMIUM WHITE EP BADGE WITH 3D FLEX */
+    /* PREMIUM WHITE EP BADGE */
     .ep-badge {
       background: rgba(255, 255, 255, 0.95);
       color: var(--black);
@@ -272,10 +274,44 @@
     .hero p {
       font-size: 1.3rem;
       color: #f0f0f0;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
       font-weight: 400;
       text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
+    
+    /* SEPTEMBER 3 DATE BADGE */
+    .date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0 24px 0;
+      padding: 16px 32px;
+      background: rgba(11, 11, 11, 0.6);
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+      animation: pulseGold 3s infinite;
+    }
+    @keyframes pulseGold {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.5); }
+    }
+    .date-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #ccc;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .date-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    }
+
     .hero-buttons {
       display: flex;
       gap: 16px;
@@ -763,6 +799,7 @@
       .hero h1 { font-size: 2.8rem; }
       .hero-buttons { flex-direction: column; align-items: center; }
       .btn { width: 90%; max-width: 300px; }
+      .date-value { font-size: 1.5rem; }
       .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
       .gallery-item img { height: 260px; }
       .about-wrapper { flex-direction: column; gap: 30px; }
@@ -778,7 +815,9 @@
     @media (max-height: 600px) {
       .hero { min-height: 100vh; }
       .hero-content { padding: 10px; }
-      .hero p { margin-bottom: 1.5rem; font-size: 1.1rem; }
+      .hero p { margin-bottom: 1rem; font-size: 1.1rem; }
+      .date-badge { margin: 5px 0 15px 0; padding: 10px 20px; }
+      .date-value { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -790,7 +829,7 @@
       <img src="https://i.ibb.co/gb1PF5wC/62-E4298-E-6370-4476-B3-CB-87661-EFABC16.png" alt="FOM Logo">
       FOM
     </a>
-    <div class="ep-badge">🔥 NEW EP COMING SOON 🔥</div>
+    <div class="ep-badge">🔥 NEW EP DROPS SEPT 3 🔥</div>
     <ul class="nav-links">
       <li><a href="#" class="active" onclick="showPage('home', event)">Home</a></li>
       <li><a href="#" onclick="showPage('about', event)">The Artist</a></li>
@@ -827,6 +866,13 @@
       <div class="hero-content">
         <h1 class="font-display glow">FACE OF MONROVIA</h1>
         <p>"From Liberia to the World" ✨</p>
+        
+        <!-- SEPTEMBER 3 HIGHLIGHT BADGE -->
+        <div class="date-badge">
+          <span class="date-label">OFFICIAL DROP DATE</span>
+          <span class="date-value">SEPTEMBER 3</span>
+        </div>
+
         <div class="hero-buttons">
           <a href="#" class="btn btn-outline" onclick="showPage('connect'); return false;">Connect With FOM</a>
           <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;">📅 Book Now</a>
@@ -873,7 +919,7 @@
         <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
           <div class="gallery-overlay">
-            <span class="gallery-title">🎵 Follow on TikTok • EP Coming Soon</span>
+            <span class="gallery-title">🎵 Follow on TikTok • EP Drops Sept 3</span>
             <div class="interactive-bar">
               <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">1.2K</span></button>
               <button class="interaction-btn" onclick="openComment('TikTok', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">342</span></button>
@@ -998,7 +1044,7 @@
           <a href="https://snapchat.com/t/JnglfKQf" target="_blank" rel="noopener noreferrer" class="social-link">Snapchat</a>
         </div>
         <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.5); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
-          <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates</p>
+          <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates (Drops Sept 3!)</p>
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="TikTok" style="max-width: 300px; border-radius: 12px; border: 2px solid var(--gold);">
         </div>
       </div>
@@ -1092,7 +1138,7 @@
     });
     
     async function shareWebsite() {
-      const shareData = { title: 'FACE OF MONROVIA | From Liberia to the World', text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Coming Soon!', url: window.location.href };
+      const shareData = { title: 'FACE OF MONROVIA | From Liberia to the World', text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Drops September 3!', url: window.location.href };
       try {
         if (navigator.share) await navigator.share(shareData);
         else { await navigator.clipboard.writeText(window.location.href); alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍'); }
@@ -1101,7 +1147,7 @@
     
     async function shareImage(imgUrl, event) {
       if(event) event.stopPropagation();
-      const shareData = { title: 'Face Of Monrovia - Gallery', text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Coming Soon!', url: imgUrl };
+      const shareData = { title: 'Face Of Monrovia - Gallery', text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Drops September 3!', url: imgUrl };
       try {
         if (navigator.share) await navigator.share(shareData);
         else { await navigator.clipboard.writeText(imgUrl); alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍'); }
