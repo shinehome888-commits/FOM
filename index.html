@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP Drops September 3">
+  <meta name="description" content="FACE OF MONROVIA | Afrobeat Artist from Liberia to the World | New EP OUT NOW!">
   <title>FACE OF MONROVIA | From Liberia to the World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -88,7 +88,7 @@
     
     /* PREMIUM WHITE EP BADGE */
     .ep-badge {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 215, 0, 0.95);
       color: var(--black);
       border: 2px solid var(--gold);
       border-radius: 24px;
@@ -96,22 +96,22 @@
       font-size: 0.8rem;
       font-weight: 800;
       letter-spacing: 0.05em;
-      animation: pulseGlowWhite 2.5s infinite;
+      animation: pulseGlowGold 2.5s infinite;
       white-space: nowrap;
       margin: 0 15px;
       backdrop-filter: blur(5px);
       flex-shrink: 0;
-      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: default;
     }
     .ep-badge:hover {
       transform: scale(1.05) rotateX(5deg) translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
     }
-    @keyframes pulseGlowWhite {
-      0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
-      50% { box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6); }
+    @keyframes pulseGlowGold {
+      0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+      50% { box-shadow: 0 6px 25px rgba(255, 215, 0, 0.8); }
     }
     
     .nav-links {
@@ -279,28 +279,28 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
     
-    /* SEPTEMBER 3 DATE BADGE */
+    /* NEW EP OUT NOW BADGE */
     .date-badge {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       margin: 10px 0 24px 0;
       padding: 16px 32px;
-      background: rgba(11, 11, 11, 0.6);
-      border: 1px solid var(--gold);
+      background: rgba(139, 0, 0, 0.7);
+      border: 2px solid var(--gold);
       border-radius: 16px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-      animation: pulseGold 3s infinite;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      animation: pulseGold 2s infinite;
     }
     @keyframes pulseGold {
-      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-      50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.5); }
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+      50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
     }
     .date-label {
       font-size: 0.75rem;
       letter-spacing: 0.2em;
-      color: #ccc;
+      color: #fff;
       margin-bottom: 4px;
       font-weight: 600;
     }
@@ -309,7 +309,7 @@
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--gold);
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
     }
 
     .hero-buttons {
@@ -331,21 +331,21 @@
       min-width: 200px;
     }
     .btn-gold {
-      background: var(--light-black);
-      color: var(--gold);
-      border: 2px solid var(--gold);
-      box-shadow: 0 8px 25px rgba(255,215,0,0.2);
-    }
-    .btn-gold:hover {
       background: var(--gold);
       color: var(--black);
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+    }
+    .btn-gold:hover {
+      background: var(--white);
+      color: var(--black);
       transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 35px rgba(255,215,0,0.5);
+      box-shadow: 0 12px 35px rgba(255,215,0,0.6);
     }
     .btn-outline {
       border-color: var(--gold);
       color: var(--gold);
-      background: var(--light-black);
+      background: rgba(0,0,0,0.5);
     }
     .btn-outline:hover {
       background: var(--gold);
@@ -376,7 +376,7 @@
       justify-content: center;
       margin-bottom: 16px;
       box-shadow: 0 0 30px rgba(255,215,0,0.5);
-      animation: pulseGlowWhite 2s infinite;
+      animation: pulseGlowGold 2s infinite;
     }
     .play-btn svg { width: 32px; height: 32px; fill: var(--black); margin-left: 4px; }
     .play-text {
@@ -754,7 +754,7 @@
       text-decoration: none;
       box-shadow: 0 8px 35px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.3);
       z-index: 1000;
-      animation: bounce 2s infinite, pulseGlowWhite 3s infinite;
+      animation: bounce 2s infinite, pulseGlowGold 3s infinite;
       transition: all 0.3s ease;
       border: 2px solid rgba(255,215,0,0.5);
       cursor: pointer;
@@ -829,7 +829,7 @@
       <img src="https://i.ibb.co/gb1PF5wC/62-E4298-E-6370-4476-B3-CB-87661-EFABC16.png" alt="FOM Logo">
       FOM
     </a>
-    <div class="ep-badge">🔥 NEW EP DROPS SEPT 3 🔥</div>
+    <div class="ep-badge">🔥 NEW EP OUT NOW! 🔥</div>
     <ul class="nav-links">
       <li><a href="#" class="active" onclick="showPage('home', event)">Home</a></li>
       <li><a href="#" onclick="showPage('about', event)">The Artist</a></li>
@@ -860,22 +860,22 @@
       
       <div class="video-overlay" id="video-overlay" onclick="enableVideo()">
         <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="play-text">TAP TO PLAY EP TEASER</div>
+        <div class="play-text">TAP TO WATCH EP TEASER</div>
       </div>
       
       <div class="hero-content">
         <h1 class="font-display glow">FACE OF MONROVIA</h1>
         <p>"From Liberia to the World" ✨</p>
         
-        <!-- SEPTEMBER 3 HIGHLIGHT BADGE -->
+        <!-- NEW EP OUT NOW BADGE -->
         <div class="date-badge">
-          <span class="date-label">OFFICIAL DROP DATE</span>
-          <span class="date-value">SEPTEMBER 3</span>
+          <span class="date-label">THE WAIT IS OVER</span>
+          <span class="date-value">NEW EP OUT NOW!</span>
         </div>
 
         <div class="hero-buttons">
-          <a href="#" class="btn btn-outline" onclick="showPage('connect'); return false;">Connect With FOM</a>
-          <a href="#" class="btn btn-gold" onclick="showPage('booking'); return false;">📅 Book Now</a>
+          <a href="#" class="btn btn-gold" onclick="showPage('connect'); return false;">🎧 Stream The New EP</a>
+          <a href="#" class="btn btn-outline" onclick="showPage('booking'); return false;">📅 Book Now</a>
         </div>
       </div>
     </section>
@@ -919,7 +919,7 @@
         <div class="gallery-item tiktok-screenshot" onclick="openLightbox('https://i.ibb.co/nMLRXQdy/IMG-9516.png')">
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="Face Of Monrovia TikTok">
           <div class="gallery-overlay">
-            <span class="gallery-title">🎵 Follow on TikTok • EP Drops Sept 3</span>
+            <span class="gallery-title">🎵 Follow on TikTok • EP OUT NOW!</span>
             <div class="interactive-bar">
               <button class="interaction-btn" onclick="toggleLike(this, event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="count">1.2K</span></button>
               <button class="interaction-btn" onclick="openComment('TikTok', event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="count">342</span></button>
@@ -1044,7 +1044,7 @@
           <a href="https://snapchat.com/t/JnglfKQf" target="_blank" rel="noopener noreferrer" class="social-link">Snapchat</a>
         </div>
         <div style="margin-top: 30px; padding: 20px; background: rgba(11,11,11,0.5); border-radius: 16px; border: 1px solid rgba(255,215,0,0.2);">
-          <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Follow on TikTok for EP Updates (Drops Sept 3!)</p>
+          <p style="color: var(--gold); font-weight: 600; margin-bottom: 12px;">🎵 Stream the NEW EP now on all platforms!</p>
           <img src="https://i.ibb.co/nMLRXQdy/IMG-9516.png" alt="TikTok" style="max-width: 300px; border-radius: 12px; border: 2px solid var(--gold);">
         </div>
       </div>
@@ -1138,7 +1138,7 @@
     });
     
     async function shareWebsite() {
-      const shareData = { title: 'FACE OF MONROVIA | From Liberia to the World', text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ New EP Drops September 3!', url: window.location.href };
+      const shareData = { title: 'FACE OF MONROVIA | From Liberia to the World', text: 'Check out Face Of Monrovia - Rising Afrobeat artist from Liberia based in Ghana! 🌍✨ Her NEW EP is OUT NOW! Stream it everywhere!', url: window.location.href };
       try {
         if (navigator.share) await navigator.share(shareData);
         else { await navigator.clipboard.writeText(window.location.href); alert('🔗 Link copied to clipboard!\n\nShare it anywhere: WhatsApp, Instagram, Twitter, etc. 🌍'); }
@@ -1147,7 +1147,7 @@
     
     async function shareImage(imgUrl, event) {
       if(event) event.stopPropagation();
-      const shareData = { title: 'Face Of Monrovia - Gallery', text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ New EP Drops September 3!', url: imgUrl };
+      const shareData = { title: 'Face Of Monrovia - Gallery', text: 'Check out this stunning moment from Face Of Monrovia! 🎤✨ Her NEW EP is OUT NOW! Stream it everywhere!', url: imgUrl };
       try {
         if (navigator.share) await navigator.share(shareData);
         else { await navigator.clipboard.writeText(imgUrl); alert('🖼️ Image link copied!\n\nPaste it anywhere to share. 🌍'); }
